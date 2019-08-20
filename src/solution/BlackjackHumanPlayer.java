@@ -49,7 +49,7 @@ public class BlackjackHumanPlayer extends BlackjackPlayer {
 
     @Override
     public int bid(BlackjackController controller) {
-        int bid = controller.getBidClicked();
+        int bid = controller.getBidClicked(this.getTokens());
         player.setTokens(player.getTokens() - bid);
         return bid;
     }

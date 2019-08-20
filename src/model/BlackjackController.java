@@ -15,7 +15,11 @@ public abstract class BlackjackController {
         this.gui.launch();
     }
 
+    public abstract void play();
+
     public abstract void playGame();
+
+    public abstract BlackjackPlayer playHand();
 
     public String getActionClicked() {
         return this.gui.getActionClicked();
@@ -29,12 +33,12 @@ public abstract class BlackjackController {
         this.gui.showGameWinner(player);
     }
 
-    public boolean getPlayAgain() {
-        return this.gui.getPlayAgain();
+    public String getPlayOptionClicked() {
+        return this.gui.getPlayOptionClicked();
     }
 
-    public int getBidClicked() {
-        return this.gui.getBidClicked();
+    public int getBidClicked(int availableTokens) {
+        return this.gui.getBidClicked(availableTokens);
     }
 
     public abstract BlackjackPlayer getHumanPlayer();

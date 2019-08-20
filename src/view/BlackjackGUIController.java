@@ -1,33 +1,33 @@
 package view;
 
-import javafx.application.Application;
+import javafx.GUIController;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.standard.CardImageView;
 import model.BlackjackController;
 import model.BlackjackPlayer;
 
-public class BlackjackGUIController extends Application {
+@SuppressWarnings("FieldCanBeLocal")
+public class BlackjackGUIController extends GUIController {
 
     private final double SCREEN_WIDTH = 800;
     private final double SCREEN_HEIGHT = 500;
 
     private BlackjackController controller;
-    private final int[] POSSIBLE_BIDS = new int[]{1, 3, 5};
+    private final Integer[] POSSIBLE_BIDS = new Integer[]{1, 3, 5};
     private final BidPanel BID_PANEL = new BidPanel(POSSIBLE_BIDS);
     private final ActionPanel ACTION_PANEL = new ActionPanel();
+    private final PlayPanel PLAY_PANEL = new PlayPanel();
     private final WinnerDisplay WINNER_DISPLAY = new WinnerDisplay();
     private final CardImageView DECK_CIV = new CardImageView();
 
     private final BorderPane MAIN_PANE = new BorderPane();
     private final StackPane CENTER_PANE = new StackPane();
-
 
     public void setGameController(BlackjackController controller) {
         this.controller = controller;
@@ -54,25 +54,31 @@ public class BlackjackGUIController extends Application {
         this.clearCenterArea();
 
         String action;
-        this.addPaneOnPlatformThread(this.CENTER_PANE, this.ACTION_PANEL);
+        this.addNodeOnPlatformThread(this.CENTER_PANE, this.ACTION_PANEL);
         action = this.ACTION_PANEL.getActionClicked();
-        this.removePaneOnPlatformThresh(this.CENTER_PANE, this.ACTION_PANEL);
+        this.removeNodeOnPlatformThread(this.CENTER_PANE, this.ACTION_PANEL);
 
         return action;
     }
 
-    public boolean getPlayAgain() {
-        // TODO
-        throw new UnsupportedOperationException("Method not implemented yet.");
+    public String getPlayOptionClicked() {
+        this.clearCenterArea();
+
+        String option;
+        this.addNodeToCenter(this.PLAY_PANEL);
+        option = this.PLAY_PANEL.getSelectedOption();
+        this.removeNodeFromCenter(this.PLAY_PANEL);
+
+        return option;
     }
 
     public int getBidClicked(int availableTokens) {
         this.clearCenterArea();
 
         int bid;
-        this.addPaneOnPlatformThread(this.CENTER_PANE, this.BID_PANEL);
+        this.addNodeToCenter(this.BID_PANEL);
         bid = this.BID_PANEL.getBidClicked(availableTokens);
-        this.removePaneOnPlatformThresh(this.CENTER_PANE, this.BID_PANEL);
+        this.removeNodeFromCenter(this.BID_PANEL);
 
         return bid;
     }
@@ -84,11 +90,11 @@ public class BlackjackGUIController extends Application {
         SimpleBooleanProperty startTimer = new SimpleBooleanProperty(false);
         Platform.runLater(() -> {
             that.WINNER_DISPLAY.setHandWinner(player);
-            that.CENTER_PANE.getChildren().add(that.WINNER_DISPLAY);
+            that.addNodeToCenter(that.WINNER_DISPLAY);
             startTimer.set(true);
         });
 
-        this.waitThenRemoveWinnerDisplay(startTimer);
+        this.waitThenRemoveWinnerDisplayFromCenter(startTimer);
     }
 
     public void showGameWinner(BlackjackPlayer player) {
@@ -98,21 +104,21 @@ public class BlackjackGUIController extends Application {
         SimpleBooleanProperty startTimer = new SimpleBooleanProperty(false);
         Platform.runLater(() -> {
             that.WINNER_DISPLAY.setGameWinner(player);
-            that.CENTER_PANE.getChildren().add(that.WINNER_DISPLAY);
+            that.addNodeToCenter(that.WINNER_DISPLAY);
             startTimer.set(true);
         });
 
-        this.waitThenRemoveWinnerDisplay(startTimer);
+        this.waitThenRemoveWinnerDisplayFromCenter(startTimer);
     }
 
-    private void waitThenRemoveWinnerDisplay(SimpleBooleanProperty shouldStart) {
-        final long UPDATE_TIME = 100; // millis
+    private void waitThenRemoveWinnerDisplayFromCenter(SimpleBooleanProperty shouldStart) {
+        final long SLEEP_TIME = 100; // millis
         final long SHOW_WINNER_DISPLAY_TIME = 2000; // millis
 
         // Wait until winner display is updated and shown.
         while (!shouldStart.get()) {
             try {
-                Thread.sleep(UPDATE_TIME);
+                Thread.sleep(SLEEP_TIME);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -125,15 +131,15 @@ public class BlackjackGUIController extends Application {
             e.printStackTrace();
         }
 
-        this.removePaneOnPlatformThresh(this.CENTER_PANE, this.WINNER_DISPLAY);
+        this.removeNodeFromCenter(this.WINNER_DISPLAY);
     }
 
-    private void addPaneOnPlatformThread(Pane parent, Pane child) {
-        Platform.runLater(() -> parent.getChildren().add(child));
+    private void addNodeToCenter(Node child) {
+        this.addNodeOnPlatformThread(this.CENTER_PANE, child);
     }
 
-    private void removePaneOnPlatformThresh(Pane parent, Node child) {
-        Platform.runLater(() -> parent.getChildren().remove(child));
+    private void removeNodeFromCenter(Node child) {
+        this.removeNodeOnPlatformThread(this.CENTER_PANE, child);
     }
 
     private void clearCenterArea() {
