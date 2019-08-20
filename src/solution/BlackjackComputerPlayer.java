@@ -1,17 +1,21 @@
 package solution;
 
+import model.BlackjackController;
 import model.BlackjackPlayer;
 import observablestandard.Deck;
 import standard.Card;
+import standard.Face;
+import standard.Suit;
 
 import java.util.Random;
 
-public class BlackjackComputerPlayer extends BlackjackPlayer<BlackjackController> {
+public class BlackjackComputerPlayer extends BlackjackPlayer {
 
     private final BlackjackHand hand;
     private BlackjackComputerPlayer player = this;
 
     public BlackjackComputerPlayer() {
+        super("Dealer");
         this.hand = new BlackjackHand(this);
     }
 
@@ -35,10 +39,14 @@ public class BlackjackComputerPlayer extends BlackjackPlayer<BlackjackController
                 playing = false;
             }
         }
+        return;
     }
 
     /**
      * For student to implement.
+     *
+     * Should remove tokens from this player, and
+     * return the number of tokens removed.
      *
      * @param controller the game controller.
      * @return amount this player is bidding.
@@ -46,8 +54,9 @@ public class BlackjackComputerPlayer extends BlackjackPlayer<BlackjackController
     @Override
     public int bid(BlackjackController controller) {
         Random random = new Random();
-        int choice = random.nextInt(3);
-        int bid = 0;
+        final int BOUND = 3;
+        int choice = random.nextInt(BOUND);
+        int bid;
 
         switch (choice) {
             case 0: bid = 1; break;
@@ -62,30 +71,32 @@ public class BlackjackComputerPlayer extends BlackjackPlayer<BlackjackController
     /**
      * For student to implement.
      *
-     * Needs to wrap BlackjackHand#addCard(Card) method.
+     * Just needs to wrap {@link BlackjackHand#addCard(Card)} method.
      *
      * @param card Card to be added.
      */
     @Override
     public void addCard(Card card) {
         this.hand.addCard(card);
-        this.setScore(this.hand.getHandScore());
+        int handScore = this.hand.getHandScore();
+        this.setScore(handScore);
     }
 
     /**
      * For student to implement.
      *
-     * Just needs to wrap the BlackjackHand#clearCards() method.
+     * Just needs to wrap the {@link BlackjackHand#addCard(Card)} method.
      */
     @Override
     public void clearCards() {
         this.hand.clearCards();
+        this.setScore(0);
     }
 
     /**
      * For student to implement.
      *
-     * Just needs to wrap the BlackjackHand#getCardCard() method.
+     * Just needs to wrap the {@link BlackjackHand#addCard(Card)} method.
      *
      * @return number of Cards in the hand.
      */
@@ -94,7 +105,7 @@ public class BlackjackComputerPlayer extends BlackjackPlayer<BlackjackController
         return this.hand.getCardCount();
     }
 
-    // Given to the students below this point.
+    // === Given to the students below this point. ===
 
     /**
      *
@@ -125,7 +136,7 @@ public class BlackjackComputerPlayer extends BlackjackPlayer<BlackjackController
 
     /**
      *
-     * @param value the new tokens for this player.
+     * @param value the new amount of tokens for this player.
      */
     @Override
     public void setTokens(int value) {

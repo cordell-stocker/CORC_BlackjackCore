@@ -1,15 +1,19 @@
 package solution;
 
+import model.BlackjackController;
 import model.BlackjackPlayer;
 import observablestandard.Deck;
 import standard.Card;
+import standard.Face;
+import standard.Suit;
 
-public class BlackjackHumanPlayer extends BlackjackPlayer<BlackjackController> {
+public class BlackjackHumanPlayer extends BlackjackPlayer {
 
     private final BlackjackHand hand;
     private BlackjackHumanPlayer player = this;
 
     public BlackjackHumanPlayer() {
+        super("You");
         this.hand = new BlackjackHand(this);
     }
 

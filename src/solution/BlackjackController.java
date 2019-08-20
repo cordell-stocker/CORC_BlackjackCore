@@ -2,13 +2,20 @@ package solution;
 
 import model.BlackjackDeck;
 import model.BlackjackPlayer;
+import structure.Deck;
 
 public class BlackjackController extends model.BlackjackController {
 
-    private BlackjackPlayer<BlackjackController> human;
-    private BlackjackPlayer<BlackjackController> dealer;
+    private BlackjackPlayer human;
+    private BlackjackPlayer dealer;
     private BlackjackController gameController = this;
     private BlackjackDeck deck;
+
+    public BlackjackController(BlackjackPlayer human, BlackjackPlayer dealer, BlackjackDeck deck) {
+        this.human = human;
+        this.dealer = dealer;
+        this.deck = deck;
+    }
 
     /**
      * For student to implement.
@@ -103,6 +110,16 @@ public class BlackjackController extends model.BlackjackController {
         bidPool += dealer.bid(gameController);
 
         return bidPool;
+    }
+
+    @Override
+    public BlackjackPlayer getHumanPlayer() {
+        return this.human;
+    }
+
+    @Override
+    public BlackjackPlayer getDealerPlayer() {
+        return this.dealer;
     }
 
     @Override

@@ -7,14 +7,26 @@ import observablestandard.Cardset;
 import observablestandard.Deck;
 import standard.Card;
 
-public abstract class BlackjackPlayer<C extends BlackjackController> {
+public abstract class BlackjackPlayer {
 
     private final SimpleIntegerProperty SCORE = new SimpleIntegerProperty(0);
     private final SimpleIntegerProperty TOKENS = new SimpleIntegerProperty(0);
     private final Cardset CARDSET = new Cardset();
+    private final String NAME;
 
-    public abstract void takeTurn(C controller, Deck deck);
+    public BlackjackPlayer(String name) {
+        this.NAME = name;
+    }
 
+    public abstract void takeTurn(BlackjackController controller, Deck deck);
+
+    /**
+     * For the student to implement.
+     *
+     * Just needs to wrap the BlackjackHand#addCard(Card) method
+     *
+     * @param card the Card to be added to this player's hand.
+     */
     public abstract void addCard(Card card);
 
     /**
@@ -36,9 +48,11 @@ public abstract class BlackjackPlayer<C extends BlackjackController> {
     /**
      * For student to implement.
      *
+     * Should remove tokens, and return the amount removed.
+     *
      * @return the amount this player is bidding.
      */
-    public abstract int bid(C controller);
+    public abstract int bid(BlackjackController controller);
 
     /**
      *
@@ -70,6 +84,14 @@ public abstract class BlackjackPlayer<C extends BlackjackController> {
      */
     public void setTokens(int value) {
         this.TOKENS.set(value);
+    }
+
+    /**
+     *
+     * @return the name of this player.
+     */
+    public String getName() {
+        return this.NAME;
     }
 
     /**
