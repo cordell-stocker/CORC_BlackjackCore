@@ -1,6 +1,6 @@
 package view;
 
-import javafx.GUIController;
+import javafxextend.GUIController;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Node;
@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.standard.CardImageView;
+import javafxextend.standard.CardImageView;
 import model.BlackjackController;
 import model.BlackjackPlayer;
 
@@ -19,8 +19,7 @@ public class BlackjackGUIController extends GUIController {
     private final double SCREEN_HEIGHT = 500;
 
     private BlackjackController controller;
-    private final Integer[] POSSIBLE_BIDS = new Integer[]{1, 3, 5};
-    private final BidPanel BID_PANEL = new BidPanel(POSSIBLE_BIDS);
+    private final BidPanel BID_PANEL = new BidPanel();
     private final ActionPanel ACTION_PANEL = new ActionPanel();
     private final PlayPanel PLAY_PANEL = new PlayPanel();
     private final WinnerDisplay WINNER_DISPLAY = new WinnerDisplay();
@@ -51,41 +50,30 @@ public class BlackjackGUIController extends GUIController {
     }
 
     public String getActionClicked() {
-        this.clearCenterArea();
-
-        String action;
         this.addNodeOnPlatformThread(this.CENTER_PANE, this.ACTION_PANEL);
-        action = this.ACTION_PANEL.getActionClicked();
+        String action = this.ACTION_PANEL.getActionClicked();
         this.removeNodeOnPlatformThread(this.CENTER_PANE, this.ACTION_PANEL);
 
         return action;
     }
 
     public String getPlayOptionClicked() {
-        this.clearCenterArea();
-
-        String option;
         this.addNodeToCenter(this.PLAY_PANEL);
-        option = this.PLAY_PANEL.getSelectedOption();
+        String option = this.PLAY_PANEL.getSelectedOption();
         this.removeNodeFromCenter(this.PLAY_PANEL);
 
         return option;
     }
 
     public int getBidClicked(int availableTokens) {
-        this.clearCenterArea();
-
-        int bid;
         this.addNodeToCenter(this.BID_PANEL);
-        bid = this.BID_PANEL.getBidClicked(availableTokens);
+        int bid = this.BID_PANEL.getBidClicked(availableTokens);
         this.removeNodeFromCenter(this.BID_PANEL);
 
         return bid;
     }
 
     public void showHandWinner(BlackjackPlayer player) {
-        this.clearCenterArea();
-
         BlackjackGUIController that = this;
         SimpleBooleanProperty startTimer = new SimpleBooleanProperty(false);
         Platform.runLater(() -> {
@@ -98,8 +86,6 @@ public class BlackjackGUIController extends GUIController {
     }
 
     public void showGameWinner(BlackjackPlayer player) {
-        this.clearCenterArea();
-
         BlackjackGUIController that = this;
         SimpleBooleanProperty startTimer = new SimpleBooleanProperty(false);
         Platform.runLater(() -> {

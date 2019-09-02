@@ -1,9 +1,6 @@
 package view;
 
-import javafx.OptionPanel;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import javafxextend.OptionPanel;
 
 @SuppressWarnings("FieldCanBeLocal")
 class ActionPanel extends OptionPanel<String> {
@@ -14,7 +11,10 @@ class ActionPanel extends OptionPanel<String> {
         super("Click an action", ActionPanel.ACTIONS);
     }
 
+    /**
+     * @return either "HIT" or "STAY"
+     */
     String getActionClicked() {
-        return super.getOptionClicked();
+        return super.getOptionClicked().toUpperCase();
     }
 }

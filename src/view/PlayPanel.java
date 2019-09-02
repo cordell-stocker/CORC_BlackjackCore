@@ -1,8 +1,8 @@
 package view;
 
-import javafx.OptionPanel;
+import javafxextend.OptionPanel;
 
-public class PlayPanel extends OptionPanel<String> {
+class PlayPanel extends OptionPanel<String> {
 
     private final static String[] OPTIONS = new String[]{"Play Game", "Exit"};
 
@@ -10,7 +10,10 @@ public class PlayPanel extends OptionPanel<String> {
         super("Select an option", PlayPanel.OPTIONS);
     }
 
+    /**
+     * @return either "PLAY GAME" or "EXIT"
+     */
     String getSelectedOption() {
-        return super.getOptionClicked();
+        return super.getOptionClicked().toUpperCase();
     }
 }

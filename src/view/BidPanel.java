@@ -1,12 +1,14 @@
 package view;
 
-import javafx.OptionPanel;
+import javafxextend.OptionPanel;
 
 @SuppressWarnings("FieldCanBeLocal")
 class BidPanel extends OptionPanel<Integer> {
 
-    BidPanel(Integer[] amounts) {
-        super("Click amount to bid", amounts);
+    private static final Integer[] POSSIBLE_BIDS = new Integer[]{1, 3, 5};
+
+    BidPanel() {
+        super("Click amount to bid", BidPanel.POSSIBLE_BIDS);
     }
 
     Integer getBidClicked(int availableTokens) {

@@ -1,6 +1,6 @@
 package model;
 
-import javafx.GUIController;
+import javafxextend.GUIController;
 import observablestandard.Cardset;
 import standard.Card;
 
