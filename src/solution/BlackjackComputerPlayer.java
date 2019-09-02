@@ -4,11 +4,10 @@ import model.BlackjackController;
 import model.BlackjackPlayer;
 import observablestandard.Deck;
 import standard.Card;
-import standard.Face;
-import standard.Suit;
 
 import java.util.Random;
 
+@SuppressWarnings("WeakerAccess")
 public class BlackjackComputerPlayer extends BlackjackPlayer {
 
     private final BlackjackHand hand;
@@ -16,17 +15,18 @@ public class BlackjackComputerPlayer extends BlackjackPlayer {
 
     public BlackjackComputerPlayer() {
         super("Dealer");
-        this.hand = new BlackjackHand(this);
+        this.hand = new BlackjackHand();
+        this.bindHand(this.hand);
     }
 
     /**
      * For student to implement.
-     *
-     * Computer should draw another Card while its score
+     * <p>
+     * Computer MUST draw another Card while its score
      * is below 16.
      *
      * @param controller the game controller.
-     * @param deck the deck for the game.
+     * @param deck       the deck for the game.
      */
     @Override
     public void takeTurn(BlackjackController controller, Deck deck) {
@@ -39,41 +39,15 @@ public class BlackjackComputerPlayer extends BlackjackPlayer {
                 playing = false;
             }
         }
-        return;
     }
 
     /**
-     * For student to implement.
+     * For the student to implement.
+     * <p>
+     * MUST wrap the {@link BlackjackHand#addCard(Card)} method.
+     * SHOULD update this player's score.
      *
-     * Should remove tokens from this player, and
-     * return the number of tokens removed.
-     *
-     * @param controller the game controller.
-     * @return amount this player is bidding.
-     */
-    @Override
-    public int bid(BlackjackController controller) {
-        Random random = new Random();
-        final int BOUND = 3;
-        int choice = random.nextInt(BOUND);
-        int bid;
-
-        switch (choice) {
-            case 0: bid = 1; break;
-            case 1: bid = 3; break;
-            default: bid = 5;
-        }
-        player.setTokens(player.getTokens() - bid);
-
-        return bid;
-    }
-
-    /**
-     * For student to implement.
-     *
-     * Just needs to wrap {@link BlackjackHand#addCard(Card)} method.
-     *
-     * @param card Card to be added.
+     * @param card the Card to be added to this player's hand.
      */
     @Override
     public void addCard(Card card) {
@@ -84,8 +58,9 @@ public class BlackjackComputerPlayer extends BlackjackPlayer {
 
     /**
      * For student to implement.
-     *
-     * Just needs to wrap the {@link BlackjackHand#addCard(Card)} method.
+     * <p>
+     * MUST wrap the {@link BlackjackHand#clearCards()} method.
+     * SHOULD set this player's score back to 0.
      */
     @Override
     public void clearCards() {
@@ -95,8 +70,8 @@ public class BlackjackComputerPlayer extends BlackjackPlayer {
 
     /**
      * For student to implement.
-     *
-     * Just needs to wrap the {@link BlackjackHand#addCard(Card)} method.
+     * <p>
+     * MUST wrap the {@link BlackjackHand#getCardCount()} method.
      *
      * @return number of Cards in the hand.
      */
@@ -105,10 +80,38 @@ public class BlackjackComputerPlayer extends BlackjackPlayer {
         return this.hand.getCardCount();
     }
 
+    /**
+     * For student to implement.
+     * <p>
+     * MUST remove tokens, and return the amount removed.
+     *
+     * @return the amount this player is bidding.
+     */
+    @Override
+    public int bid(BlackjackController controller) {
+        Random random = new Random();
+        final int BOUND = 3;
+        int choice = random.nextInt(BOUND);
+        int bid;
+
+        switch (choice) {
+            case 0:
+                bid = 1;
+                break;
+            case 1:
+                bid = 3;
+                break;
+            default:
+                bid = 5;
+        }
+        player.setTokens(player.getTokens() - bid);
+
+        return bid;
+    }
+
     // === Given to the students below this point. ===
 
     /**
-     *
      * @return this player's score.
      */
     @Override
@@ -117,7 +120,6 @@ public class BlackjackComputerPlayer extends BlackjackPlayer {
     }
 
     /**
-     *
      * @param value the new score for this player.
      */
     @Override
@@ -126,7 +128,6 @@ public class BlackjackComputerPlayer extends BlackjackPlayer {
     }
 
     /**
-     *
      * @return this player's tokens.
      */
     @Override
@@ -135,7 +136,6 @@ public class BlackjackComputerPlayer extends BlackjackPlayer {
     }
 
     /**
-     *
      * @param value the new amount of tokens for this player.
      */
     @Override

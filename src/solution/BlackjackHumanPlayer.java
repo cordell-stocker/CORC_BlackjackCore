@@ -4,9 +4,8 @@ import model.BlackjackController;
 import model.BlackjackPlayer;
 import observablestandard.Deck;
 import standard.Card;
-import standard.Face;
-import standard.Suit;
 
+@SuppressWarnings("WeakerAccess")
 public class BlackjackHumanPlayer extends BlackjackPlayer {
 
     private final BlackjackHand hand;
@@ -14,21 +13,22 @@ public class BlackjackHumanPlayer extends BlackjackPlayer {
 
     public BlackjackHumanPlayer() {
         super("You");
-        this.hand = new BlackjackHand(this);
+        this.hand = new BlackjackHand();
+        this.bindHand(this.hand);
     }
 
     /**
      * For student to implement.
-     *
-     * Should prevent the player from playing (end turn) once
+     * <p>
+     * SHOULD prevent the player from playing (end turn) once
      * their score goes over 21.
-     *
-     * Should call the BlackjackController#getActionClicked()
+     * <p>
+     * MUST call the {@link BlackjackController#getActionClicked()}
      * method to determine if the player wants to "HIT"
      * (draw another Card) or "STAY" (end turn).
      *
      * @param controller the game controller.
-     * @param deck the deck used in the game.
+     * @param deck       the deck used in the game.
      */
     @Override
     public void takeTurn(BlackjackController controller, Deck deck) {
@@ -47,19 +47,13 @@ public class BlackjackHumanPlayer extends BlackjackPlayer {
         }
     }
 
-    @Override
-    public int bid(BlackjackController controller) {
-        int bid = controller.getBidClicked(this.getTokens());
-        player.setTokens(player.getTokens() - bid);
-        return bid;
-    }
-
     /**
-     * For student to implement.
+     * For the student to implement.
+     * <p>
+     * MUST wrap the {@link BlackjackHand#addCard(Card)} method.
+     * SHOULD update this player's score.
      *
-     * Needs to wrap BlackjackHand#addCard(Card) method.
-     *
-     * @param card Card to be added.
+     * @param card the Card to be added to this player's hand.
      */
     @Override
     public void addCard(Card card) {
@@ -69,18 +63,20 @@ public class BlackjackHumanPlayer extends BlackjackPlayer {
 
     /**
      * For student to implement.
-     *
-     * Just needs to wrap the BlackjackHand#clearCards() method.
+     * <p>
+     * MUST wrap the {@link BlackjackHand#clearCards()} method.
+     * SHOULD set this player's score back to 0.
      */
     @Override
     public void clearCards() {
         this.hand.clearCards();
+        this.setScore(0);
     }
 
     /**
      * For student to implement.
-     *
-     * Just needs to wrap the BlackjackHand#getCardCard() method.
+     * <p>
+     * MUST wrap the {@link BlackjackHand#getCardCount()} method.
      *
      * @return number of Cards in the hand.
      */
@@ -89,10 +85,23 @@ public class BlackjackHumanPlayer extends BlackjackPlayer {
         return this.hand.getCardCount();
     }
 
-    // Given to the students below this point.
+    /**
+     * For student to implement.
+     * <p>
+     * MUST remove tokens, and return the amount removed.
+     *
+     * @return the amount this player is bidding.
+     */
+    @Override
+    public int bid(BlackjackController controller) {
+        int bid = controller.getBidClicked(this.getTokens());
+        player.setTokens(player.getTokens() - bid);
+        return bid;
+    }
+
+    // === Given to the students below this point ===
 
     /**
-     *
      * @return this player's score.
      */
     @Override
@@ -101,7 +110,6 @@ public class BlackjackHumanPlayer extends BlackjackPlayer {
     }
 
     /**
-     *
      * @param value the new score for this player.
      */
     @Override
@@ -110,7 +118,6 @@ public class BlackjackHumanPlayer extends BlackjackPlayer {
     }
 
     /**
-     *
      * @return this player's tokens.
      */
     @Override
@@ -119,7 +126,6 @@ public class BlackjackHumanPlayer extends BlackjackPlayer {
     }
 
     /**
-     *
      * @param value the new tokens for this player.
      */
     @Override
