@@ -1,6 +1,6 @@
 package view;
 
-import javafxextend.GUIController;
+import javafxextend.structure.GUIController;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Node;
@@ -18,7 +18,7 @@ public class BlackjackGUIController extends GUIController {
     private final double SCREEN_WIDTH = 800;
     private final double SCREEN_HEIGHT = 500;
 
-    private BlackjackController controller;
+    private static BlackjackController controller;
     private final BidPanel BID_PANEL = new BidPanel();
     private final ActionPanel ACTION_PANEL = new ActionPanel();
     private final PlayPanel PLAY_PANEL = new PlayPanel();
@@ -28,20 +28,22 @@ public class BlackjackGUIController extends GUIController {
     private final BorderPane MAIN_PANE = new BorderPane();
     private final StackPane CENTER_PANE = new StackPane();
 
-    public void setGameController(BlackjackController controller) {
-        this.controller = controller;
+    public static void setGameController(BlackjackController controller) {
+        BlackjackGUIController.controller = controller;
     }
 
-    public BlackjackController getGameController() {
-        return this.controller;
+    public static BlackjackController getGameController() {
+        return BlackjackGUIController.controller;
     }
 
-    public void launch() {
-        this.launch();
+    public static void launchGUI() {
+        BlackjackGUIController.launch();
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        BlackjackGUIController.controller.setGuiController(this);
+        this.MAIN_PANE.setCenter(this.CENTER_PANE);
 
 
         Scene scene = new Scene(this.MAIN_PANE, this.SCREEN_WIDTH, this.SCREEN_HEIGHT);

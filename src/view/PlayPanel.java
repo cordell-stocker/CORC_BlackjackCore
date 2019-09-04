@@ -1,6 +1,6 @@
 package view;
 
-import javafxextend.OptionPanel;
+import javafxextend.structure.OptionPanel;
 
 class PlayPanel extends OptionPanel<String> {
 

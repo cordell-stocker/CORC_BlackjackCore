@@ -1,6 +1,6 @@
 package view;
 
-import javafxextend.OptionPanel;
+import javafxextend.structure.OptionPanel;
 
 @SuppressWarnings("FieldCanBeLocal")
 class BidPanel extends OptionPanel<Integer> {

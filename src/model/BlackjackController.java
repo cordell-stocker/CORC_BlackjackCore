@@ -10,9 +10,8 @@ public abstract class BlackjackController {
     }
 
     public void launchWithGUI() {
-        this.gui = new BlackjackGUIController();
-        this.gui.setGameController(this);
-        this.gui.launch();
+        BlackjackGUIController.setGameController(this);
+        BlackjackGUIController.launchGUI();
     }
 
     public abstract void play();
@@ -44,4 +43,8 @@ public abstract class BlackjackController {
     public abstract BlackjackPlayer getHumanPlayer();
 
     public abstract BlackjackPlayer getDealerPlayer();
+
+    public void setGuiController(BlackjackGUIController gui) {
+        this.gui = gui;
+    }
 }
