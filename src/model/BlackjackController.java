@@ -6,9 +6,6 @@ public abstract class BlackjackController {
 
     private BlackjackGUIController gui;
 
-    public BlackjackController() {
-    }
-
     public void launchWithGUI() {
         BlackjackGUIController.setGameController(this);
         BlackjackGUIController.launchGUI();
@@ -40,6 +37,14 @@ public abstract class BlackjackController {
         return this.gui.getBidClicked(availableTokens);
     }
 
+    public void getContinue() {
+        this.gui.getContinue();
+    }
+
+    public void exitGame() {
+        System.exit(1);
+    }
+
     public abstract BlackjackPlayer getHumanPlayer();
 
     public abstract BlackjackPlayer getDealerPlayer();
@@ -47,4 +52,8 @@ public abstract class BlackjackController {
     public void setGuiController(BlackjackGUIController gui) {
         this.gui = gui;
     }
+
+    public abstract BlackjackPlayer getDealer();
+
+    public abstract BlackjackPlayer getHuman();
 }

@@ -3,16 +3,14 @@ package view;
 import javafx.scene.control.Label;
 import model.BlackjackPlayer;
 
-@SuppressWarnings({"FieldCanBeLocal", "SpellCheckingInspection"})
-public class WinnerDisplay extends Label {
+@SuppressWarnings({"FieldCanBeLocal"})
+class WinnerDisplay extends Label {
 
-    private final double FONT_SIZE = 80;
+    private final double FONT_SIZE = 60;
     private final String FONT = "Tohma";
 
     WinnerDisplay() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("-fx-font: ").append(this.FONT_SIZE).append("px ").append(this.FONT);
-        this.setStyle(sb.toString());
+        this.setStyle("-fx-font: " + this.FONT_SIZE + "px " + this.FONT);
     }
 
     void setHandWinner(BlackjackPlayer player) {

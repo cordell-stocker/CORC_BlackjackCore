@@ -83,6 +83,9 @@ public class BlackjackHand extends AbstractBlackjackHand {
         int score = 0;
         //noinspection ForLoopReplaceableByForEach
         for (int i = 0; i < this.hand.length; i++) {
+            if (this.hand[i] == null) {
+                continue;
+            }
             String face = this.hand[i].getFace().getName();
             if (face.equals("ACE")) {
                 aceCount++;

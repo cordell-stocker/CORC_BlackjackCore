@@ -108,6 +108,7 @@ public abstract class BlackjackPlayer {
 
     public void addScoreListener(ChangeListener<? super Number> listener) {
         this.SCORE.addListener(listener);
+        this.SCORE.set(this.SCORE.get());
     }
 
     public void removeScoreListener(ChangeListener<? super Number> listener) {
@@ -116,6 +117,7 @@ public abstract class BlackjackPlayer {
 
     public void addTokenListener(ChangeListener<? super Number> listener) {
         this.TOKENS.addListener(listener);
+        this.TOKENS.set(this.TOKENS.get());
     }
 
     public void removeTokenListener(ChangeListener<? super Number> listener) {

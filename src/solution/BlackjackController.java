@@ -39,6 +39,7 @@ public class BlackjackController extends model.BlackjackController {
             gameController.playGame();
             playing = gameController.shouldPlay();
         }
+        gameController.exitGame();
     }
 
     /**
@@ -59,6 +60,9 @@ public class BlackjackController extends model.BlackjackController {
         while (playing) {
             BlackjackPlayer winner = gameController.playHand();
             gameController.setHandWinner(winner);
+            gameController.getContinue();
+            human.clearCards();
+            dealer.clearCards();
 
             // Are both players' tokens between 0 and WINNING_THRESHOLD?
             playing = gameController.doPlayersHaveTokensInsideLimit(human, dealer, 0, WINNING_THRESHOLD);
@@ -164,7 +168,7 @@ public class BlackjackController extends model.BlackjackController {
 
     public boolean shouldPlay() {
         String play = gameController.getPlayOptionClicked();
-        return play.equals("PLAY AGAIN");
+        return play.equals("PLAY GAME");
     }
 
     // === Given ===
@@ -202,5 +206,25 @@ public class BlackjackController extends model.BlackjackController {
     @Override
     public String getPlayOptionClicked() {
         return super.getPlayOptionClicked();
+    }
+
+    @Override
+    public void getContinue() {
+        super.getContinue();
+    }
+
+    @Override
+    public void exitGame() {
+        super.exitGame();
+    }
+
+    @Override
+    public BlackjackPlayer getDealer() {
+        return this.dealer;
+    }
+
+    @Override
+    public BlackjackPlayer getHuman() {
+        return this.human;
     }
 }
