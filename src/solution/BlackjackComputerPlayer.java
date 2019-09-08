@@ -1,8 +1,8 @@
 package solution;
 
-import model.BlackjackController;
+import javafxextend.standard.Deck;
+import model.AbstractBlackjackController;
 import model.BlackjackPlayer;
-import observablestandard.Deck;
 import standard.Card;
 
 import java.util.Random;
@@ -29,7 +29,7 @@ public class BlackjackComputerPlayer extends BlackjackPlayer {
      * @param deck       the deck for the game.
      */
     @Override
-    public void takeTurn(BlackjackController controller, Deck deck) {
+    public void takeTurn(AbstractBlackjackController controller, Deck deck) {
         boolean playing = true;
         while (playing) {
             if (this.getScore() < 16) {
@@ -88,7 +88,7 @@ public class BlackjackComputerPlayer extends BlackjackPlayer {
      * @return the amount this player is bidding.
      */
     @Override
-    public int bid(BlackjackController controller) {
+    public int bid(AbstractBlackjackController controller) {
         Random random = new Random();
         final int BOUND = 3;
         int choice = random.nextInt(BOUND);

@@ -1,6 +1,7 @@
 package model;
 
-import observablestandard.Deck;
+
+import javafxextend.standard.Deck;
 
 public class BlackjackDeck extends Deck {
 

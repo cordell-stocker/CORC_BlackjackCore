@@ -44,7 +44,7 @@ class BlackjackVisualHand extends VisualHand {
         return this.tokenListener;
     }
 
-    protected void setScoreVisibility(boolean visibility) {
+    void setScoreVisibility(boolean visibility) {
         this.SCORE.setVisible(visibility);
     }
 

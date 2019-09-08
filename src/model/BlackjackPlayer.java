@@ -3,7 +3,7 @@ package model;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
-import observablestandard.Deck;
+import javafxextend.standard.Deck;
 import standard.Card;
 
 @SuppressWarnings("unused")
@@ -33,7 +33,7 @@ public abstract class BlackjackPlayer {
      * @param controller the game controller.
      * @param deck       the deck used in the game.
      */
-    public abstract void takeTurn(BlackjackController controller, Deck deck);
+    public abstract void takeTurn(AbstractBlackjackController controller, Deck deck);
 
     /**
      * For the student to implement.
@@ -69,7 +69,7 @@ public abstract class BlackjackPlayer {
      *
      * @return the amount this player is bidding.
      */
-    public abstract int bid(BlackjackController controller);
+    public abstract int bid(AbstractBlackjackController controller);
 
     /**
      * @return this player's score.

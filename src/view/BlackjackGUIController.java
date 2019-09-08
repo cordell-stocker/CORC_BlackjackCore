@@ -17,7 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafxextend.standard.CardImageView;
-import model.BlackjackController;
+import model.AbstractBlackjackController;
 import model.BlackjackPlayer;
 import standard.Card;
 
@@ -27,7 +27,7 @@ public class BlackjackGUIController extends GUIController {
     private final double SCREEN_WIDTH = 800;
     private final double SCREEN_HEIGHT = 500;
 
-    private static BlackjackController controller;
+    private static AbstractBlackjackController controller;
     private final BidPanel BID_PANEL = new BidPanel();
     private final ActionPanel ACTION_PANEL = new ActionPanel();
     private final PlayPanel PLAY_PANEL = new PlayPanel();
@@ -44,7 +44,7 @@ public class BlackjackGUIController extends GUIController {
     private Image deckImage = this.DECK_CIV.getImage();
     private double spacing = this.deckImage.getWidth() * -0.33;
 
-    public static void setGameController(BlackjackController controller) {
+    public static void setGameController(AbstractBlackjackController controller) {
         BlackjackGUIController.controller = controller;
     }
 
@@ -136,6 +136,7 @@ public class BlackjackGUIController extends GUIController {
         this.addNodeToCenter(this.CONTINUE_PANEL);
         this.CONTINUE_PANEL.getContinue();
         this.removeNodeFromCenter(this.CONTINUE_PANEL);
+        Platform.runLater(() -> this.dealerVH.setScoreVisibility(false));
     }
 
     public int getBidClicked(int availableTokens) {

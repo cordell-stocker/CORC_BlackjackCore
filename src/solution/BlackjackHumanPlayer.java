@@ -1,8 +1,8 @@
 package solution;
 
-import model.BlackjackController;
+import javafxextend.standard.Deck;
+import model.AbstractBlackjackController;
 import model.BlackjackPlayer;
-import observablestandard.Deck;
 import standard.Card;
 
 @SuppressWarnings("WeakerAccess")
@@ -23,7 +23,7 @@ public class BlackjackHumanPlayer extends BlackjackPlayer {
      * SHOULD prevent the player from playing (end turn) once
      * their score goes over 21.
      * <p>
-     * MUST call the {@link BlackjackController#getActionClicked()}
+     * MUST call the {@link AbstractBlackjackController#getActionClicked()}
      * method to determine if the player wants to "HIT"
      * (draw another Card) or "STAY" (end turn).
      *
@@ -31,7 +31,7 @@ public class BlackjackHumanPlayer extends BlackjackPlayer {
      * @param deck       the deck used in the game.
      */
     @Override
-    public void takeTurn(BlackjackController controller, Deck deck) {
+    public void takeTurn(AbstractBlackjackController controller, Deck deck) {
         boolean playing = true;
         while (playing) {
             String action = controller.getActionClicked();
@@ -93,7 +93,7 @@ public class BlackjackHumanPlayer extends BlackjackPlayer {
      * @return the amount this player is bidding.
      */
     @Override
-    public int bid(BlackjackController controller) {
+    public int bid(AbstractBlackjackController controller) {
         int bid = controller.getBidClicked(this.getTokens());
         player.setTokens(player.getTokens() - bid);
         return bid;

@@ -1,7 +1,7 @@
 package model;
 
+import javafxextend.standard.Cardset;
 import javafxextend.structure.GUIController;
-import observablestandard.Cardset;
 import standard.Card;
 
 public class BlackjackCardset extends Cardset {
