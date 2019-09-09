@@ -4,7 +4,7 @@ import model.AbstractBlackjackController;
 import model.BlackjackDeck;
 import model.BlackjackPlayer;
 
-@SuppressWarnings({"WeakerAccess", "FieldCanBeLocal"})
+@SuppressWarnings({"WeakerAccess", "FieldCanBeLocal", "unchecked"})
 public class BlackjackController extends AbstractBlackjackController {
 
     private BlackjackPlayer human;
@@ -24,21 +24,23 @@ public class BlackjackController extends AbstractBlackjackController {
         this.deck = deck;
     }
 
+
     /**
      * For student to implement.
      * <p>
      * Student should understand that the flow of execution starts here,
      * for the purpose of this project.
-     *
+     * <p>
      * Should contain all logic necessary for playing multiple
      * full games of blackjack.
      */
     @Override
     public void play() {
-        boolean playing = gameController.shouldPlay();
+        boolean playing = true;
         while (playing) {
             gameController.playGame();
-            playing = gameController.shouldPlay();
+            String response = gameController.getPlayOptionClicked();
+            playing = response.equals("PLAY GAME");
         }
         gameController.exitGame();
     }
@@ -61,15 +63,25 @@ public class BlackjackController extends AbstractBlackjackController {
         while (playing) {
             BlackjackPlayer winner = gameController.playHand();
             gameController.setHandWinner(winner);
+
             gameController.getContinue();
+
             human.clearCards();
             dealer.clearCards();
 
             // Are both players' tokens between 0 and WINNING_THRESHOLD?
-            playing = gameController.doPlayersHaveTokensInsideLimit(human, dealer, 0, WINNING_THRESHOLD);
+            boolean humanTokensValid = WINNING_THRESHOLD > human.getTokens() && human.getTokens() > 0;
+            boolean dealerTokensValid = WINNING_THRESHOLD > dealer.getTokens() && dealer.getTokens() > 0;
+            playing = humanTokensValid && dealerTokensValid;
         }
 
-        BlackjackPlayer gameWinner = gameController.getGameWinner();
+        BlackjackPlayer gameWinner;
+        if (human.getTokens() >= WINNING_THRESHOLD || dealer.getTokens() <= 0) {
+            gameWinner = human;
+        } else {
+            gameWinner = dealer;
+        }
+
         gameController.setGameWinner(gameWinner);
     }
 
@@ -83,29 +95,20 @@ public class BlackjackController extends AbstractBlackjackController {
      */
     @Override
     public BlackjackPlayer playHand() {
-        BlackjackPlayer handWinner;
-
         if (deck.size() <= NEW_DECK_THRESHOLD) {
             deck.reset();
             deck.shuffle();
         }
 
-        int bidPool = gameController.getBidPool();
+        int bidPool = 0;
+        bidPool += human.bid(gameController);
+        bidPool += dealer.bid(gameController);
 
         for (int i = 0; i < STARTING_CARDS; i++) {
             human.addCard(deck.drawCard());
             dealer.addCard(deck.drawCard());
         }
 
-        handWinner = gameController.doHumanAndDealerTurnAndReturnWinner();
-        handWinner.setTokens(handWinner.getTokens() + bidPool);
-
-        return handWinner;
-    }
-
-    // === Not required, just makes code look nicer. Most students will just have big methods. ===
-
-    public BlackjackPlayer doHumanAndDealerTurnAndReturnWinner() {
         BlackjackPlayer handWinner;
         human.takeTurn(gameController, deck);
         // Dealer won.
@@ -118,58 +121,22 @@ public class BlackjackController extends AbstractBlackjackController {
         }
         // No winner yet.
         else {
-            handWinner = gameController.doDealerTurnAndReturnWinner();
+            dealer.takeTurn(gameController, deck);
+            // Human won.
+            if (dealer.getScore() > MAX_SCORE) {
+                handWinner = human;
+            }
+            // Dealer won.
+            else if (dealer.getCardCount() == CARD_COUNT_WIN_THRESHOLD || dealer.getScore() >= human.getScore()) {
+                handWinner = dealer;
+            } else {
+                handWinner = human;
+            }
         }
+
+        handWinner.setTokens(handWinner.getTokens() + bidPool);
+
         return handWinner;
-    }
-
-    public BlackjackPlayer doDealerTurnAndReturnWinner() {
-        BlackjackPlayer handWinner;
-        dealer.takeTurn(gameController, deck);
-        // Human won.
-        if (dealer.getScore() > MAX_SCORE) {
-            handWinner = human;
-        }
-        // Dealer won.
-        else if (dealer.getCardCount() == CARD_COUNT_WIN_THRESHOLD || dealer.getScore() > human.getScore()) {
-            handWinner = dealer;
-        } else {
-            handWinner = human;
-        }
-        return handWinner;
-    }
-
-    public boolean doPlayersHaveTokensInsideLimit
-            (BlackjackPlayer firstPlayer, BlackjackPlayer secondPlayer, int min, int max) {
-        return gameController.hasTokensInsideLimit(firstPlayer, min, max)
-                && gameController.hasTokensInsideLimit(secondPlayer, min, max);
-    }
-
-    public boolean hasTokensInsideLimit(BlackjackPlayer player, int min, int max) {
-        return max > player.getTokens() && player.getTokens() > min;
-    }
-
-    public int getBidPool() {
-        int bidPool = 0;
-        bidPool += human.bid(gameController);
-        bidPool += dealer.bid(gameController);
-
-        return bidPool;
-    }
-
-    public BlackjackPlayer getGameWinner() {
-        BlackjackPlayer gameWinner;
-        if (human.getTokens() >= WINNING_THRESHOLD || dealer.getTokens() <= 0) {
-            gameWinner = human;
-        } else {
-            gameWinner = dealer;
-        }
-        return gameWinner;
-    }
-
-    public boolean shouldPlay() {
-        String play = gameController.getPlayOptionClicked();
-        return play.equals("PLAY GAME");
     }
 
     // === Given ===

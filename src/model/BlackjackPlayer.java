@@ -5,9 +5,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
 import javafxextend.standard.Deck;
 import standard.Card;
+import view.BlackjackVisualHand;
 
 @SuppressWarnings("unused")
-public abstract class BlackjackPlayer {
+public abstract class BlackjackPlayer<C extends AbstractBlackjackController> {
 
     private final SimpleIntegerProperty SCORE = new SimpleIntegerProperty(0);
     private final SimpleIntegerProperty TOKENS = new SimpleIntegerProperty(0);
@@ -33,7 +34,7 @@ public abstract class BlackjackPlayer {
      * @param controller the game controller.
      * @param deck       the deck used in the game.
      */
-    public abstract void takeTurn(AbstractBlackjackController controller, Deck deck);
+    public abstract void takeTurn(C controller, Deck deck);
 
     /**
      * For the student to implement.
@@ -69,7 +70,7 @@ public abstract class BlackjackPlayer {
      *
      * @return the amount this player is bidding.
      */
-    public abstract int bid(AbstractBlackjackController controller);
+    public abstract int bid(C controller);
 
     /**
      * @return this player's score.
@@ -130,5 +131,9 @@ public abstract class BlackjackPlayer {
 
     public void removeCardsetListener(ListChangeListener<Card> listener) {
         this.CARDSET.removeListener(listener);
+    }
+
+    public void setVisualHand(BlackjackVisualHand visualHand) {
+        this.CARDSET.setVisualHand(visualHand);
     }
 }

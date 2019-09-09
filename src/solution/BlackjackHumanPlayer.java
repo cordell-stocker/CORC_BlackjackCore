@@ -1,12 +1,17 @@
 package solution;
 
 import javafxextend.standard.Deck;
-import model.AbstractBlackjackController;
 import model.BlackjackPlayer;
 import standard.Card;
 
+/**
+ * Represents the human player in a game of Blackjack.
+ * <p>
+ * A BlackjackHumanPlayer will need to makes calls to its
+ * controller to get user input.
+ */
 @SuppressWarnings("WeakerAccess")
-public class BlackjackHumanPlayer extends BlackjackPlayer {
+public class BlackjackHumanPlayer extends BlackjackPlayer<BlackjackController> {
 
     private final BlackjackHand hand;
     private BlackjackHumanPlayer player = this;
@@ -20,28 +25,34 @@ public class BlackjackHumanPlayer extends BlackjackPlayer {
     /**
      * For student to implement.
      * <p>
-     * SHOULD prevent the player from playing (end turn) once
+     * SHOULD prevent the player from playing once
      * their score goes over 21.
      * <p>
-     * MUST call the {@link AbstractBlackjackController#getActionClicked()}
-     * method to determine if the player wants to "HIT"
+     * MAY prevent the player from playing once
+     * their score is 21.
+     * <p>
+     * SHOULD prevent the player from playing once
+     * they have 5 cards.
+     * <p>
+     * MUST call {@link BlackjackController#getActionClicked()}
+     * to determine if the player wants to "HIT"
      * (draw another Card) or "STAY" (end turn).
      *
      * @param controller the game controller.
      * @param deck       the deck used in the game.
      */
     @Override
-    public void takeTurn(AbstractBlackjackController controller, Deck deck) {
+    public void takeTurn(BlackjackController controller, Deck deck) {
         boolean playing = true;
         while (playing) {
             String action = controller.getActionClicked();
             if (action.equals("HIT")) {
                 Card card = deck.drawCard();
-                this.addCard(card);
+                player.addCard(card);
             } else if (action.equals("STAY")) {
                 playing = false;
             }
-            if (this.getScore() >= 21) {
+            if (player.getScore() >= 21 || player.getCardCount() == 5) {
                 playing = false;
             }
         }
@@ -50,7 +61,8 @@ public class BlackjackHumanPlayer extends BlackjackPlayer {
     /**
      * For the student to implement.
      * <p>
-     * MUST wrap the {@link BlackjackHand#addCard(Card)} method.
+     * MUST call {@link BlackjackHand#addCard(Card)}.
+     * <p>
      * SHOULD update this player's score.
      *
      * @param card the Card to be added to this player's hand.
@@ -64,7 +76,8 @@ public class BlackjackHumanPlayer extends BlackjackPlayer {
     /**
      * For student to implement.
      * <p>
-     * MUST wrap the {@link BlackjackHand#clearCards()} method.
+     * MUST call {@link BlackjackHand#clearCards()}.
+     * <p>
      * SHOULD set this player's score back to 0.
      */
     @Override
@@ -76,7 +89,7 @@ public class BlackjackHumanPlayer extends BlackjackPlayer {
     /**
      * For student to implement.
      * <p>
-     * MUST wrap the {@link BlackjackHand#getCardCount()} method.
+     * MUST call {@link BlackjackHand#getCardCount()}.
      *
      * @return number of Cards in the hand.
      */
@@ -88,12 +101,14 @@ public class BlackjackHumanPlayer extends BlackjackPlayer {
     /**
      * For student to implement.
      * <p>
+     * MUST call {@link BlackjackController#getBidClicked(int)}.
+     * <p>
      * MUST remove tokens, and return the amount removed.
      *
      * @return the amount this player is bidding.
      */
     @Override
-    public int bid(AbstractBlackjackController controller) {
+    public int bid(BlackjackController controller) {
         int bid = controller.getBidClicked(this.getTokens());
         player.setTokens(player.getTokens() - bid);
         return bid;
@@ -126,7 +141,7 @@ public class BlackjackHumanPlayer extends BlackjackPlayer {
     }
 
     /**
-     * @param value the new tokens for this player.
+     * @param value the new amount of tokens for this player.
      */
     @Override
     public void setTokens(int value) {

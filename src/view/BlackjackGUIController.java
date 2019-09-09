@@ -112,6 +112,7 @@ public class BlackjackGUIController extends GUIController {
         ChangeListener<Number> scoreListener = visualHand.getScoreListener();
         ChangeListener<Number> tokenListener = visualHand.getTokenListener();
         player.addCardsetListener(cardListener);
+        player.setVisualHand(visualHand);
         player.addScoreListener(scoreListener);
         player.addTokenListener(tokenListener);
     }
@@ -120,6 +121,7 @@ public class BlackjackGUIController extends GUIController {
         this.addNodeOnPlatformThread(this.CENTER_PANE, this.ACTION_PANEL);
         String action = this.ACTION_PANEL.getActionClicked();
         this.removeNodeOnPlatformThread(this.CENTER_PANE, this.ACTION_PANEL);
+        Platform.runLater(() -> this.dealerVH.hideStatus());
 
         return action;
     }
@@ -136,7 +138,7 @@ public class BlackjackGUIController extends GUIController {
         this.addNodeToCenter(this.CONTINUE_PANEL);
         this.CONTINUE_PANEL.getContinue();
         this.removeNodeFromCenter(this.CONTINUE_PANEL);
-        Platform.runLater(() -> this.dealerVH.setScoreVisibility(false));
+        Platform.runLater(() -> this.dealerVH.hideStatus());
     }
 
     public int getBidClicked(int availableTokens) {
@@ -148,11 +150,12 @@ public class BlackjackGUIController extends GUIController {
     }
 
     public void showHandWinner(BlackjackPlayer player) {
+        GUIController.waitOnGUI();
         BlackjackGUIController that = this;
         SimpleBooleanProperty startTimer = new SimpleBooleanProperty(false);
         Platform.runLater(() -> {
             that.WINNER_DISPLAY.setHandWinner(player);
-            that.dealerVH.showAllCards();
+            that.dealerVH.showEverything();
             that.addNodeToCenter(that.WINNER_DISPLAY);
             startTimer.set(true);
         });
@@ -161,11 +164,12 @@ public class BlackjackGUIController extends GUIController {
     }
 
     public void showGameWinner(BlackjackPlayer player) {
+        GUIController.waitOnGUI();
         BlackjackGUIController that = this;
         SimpleBooleanProperty startTimer = new SimpleBooleanProperty(false);
         Platform.runLater(() -> {
             that.WINNER_DISPLAY.setGameWinner(player);
-            that.dealerVH.showAllCards();
+            that.dealerVH.showEverything();
             that.addNodeToCenter(that.WINNER_DISPLAY);
             startTimer.set(true);
         });

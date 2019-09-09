@@ -6,9 +6,11 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafxextend.standard.CardImageView;
 import javafxextend.standard.VisualHand;
+import standard.Card;
 
-class BlackjackVisualHand extends VisualHand {
+public class BlackjackVisualHand extends VisualHand {
 
     private final GridPane GRID = new GridPane();
     private final Label SCORE = new Label("0");
@@ -46,6 +48,26 @@ class BlackjackVisualHand extends VisualHand {
 
     void setScoreVisibility(boolean visibility) {
         this.SCORE.setVisible(visibility);
+    }
+
+    public void addCard(Card card) {
+        Platform.runLater(() -> {
+            CardImageView cardImageView = new CardImageView(card);
+            this.addCardImageView(cardImageView);
+        });
+    }
+
+    public void removeCard(Card card) {
+        Platform.runLater(() -> {
+            CardImageView toRemove = null;
+            for (CardImageView cardImageView : this.getSavedCardImageViews()) {
+                if (cardImageView.getCard() == card) {
+                    toRemove = cardImageView;
+                    break;
+                }
+            }
+            this.removeCardImageView(toRemove);
+        });
     }
 
 }

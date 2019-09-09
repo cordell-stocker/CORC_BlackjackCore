@@ -22,7 +22,7 @@ public class BlackjackComputerPlayer extends BlackjackPlayer {
     /**
      * For student to implement.
      * <p>
-     * Computer MUST draw another Card while its score
+     * MUST draw another Card while its score
      * is below 16.
      *
      * @param controller the game controller.
@@ -44,7 +44,8 @@ public class BlackjackComputerPlayer extends BlackjackPlayer {
     /**
      * For the student to implement.
      * <p>
-     * MUST wrap the {@link BlackjackHand#addCard(Card)} method.
+     * MUST call {@link BlackjackHand#addCard(Card)}.
+     * <p>
      * SHOULD update this player's score.
      *
      * @param card the Card to be added to this player's hand.
@@ -59,7 +60,8 @@ public class BlackjackComputerPlayer extends BlackjackPlayer {
     /**
      * For student to implement.
      * <p>
-     * MUST wrap the {@link BlackjackHand#clearCards()} method.
+     * MUST call {@link BlackjackHand#clearCards()}.
+     * <p>
      * SHOULD set this player's score back to 0.
      */
     @Override
@@ -71,7 +73,7 @@ public class BlackjackComputerPlayer extends BlackjackPlayer {
     /**
      * For student to implement.
      * <p>
-     * MUST wrap the {@link BlackjackHand#getCardCount()} method.
+     * MUST call {@link BlackjackHand#getCardCount()}.
      *
      * @return number of Cards in the hand.
      */
@@ -82,6 +84,11 @@ public class BlackjackComputerPlayer extends BlackjackPlayer {
 
     /**
      * For student to implement.
+     * <p>
+     * MUST randomly decide between 1, 3, and 5 tokens to
+     * bid.
+     * <p>
+     * MUST NOT bid more tokens than this player has.
      * <p>
      * MUST remove tokens, and return the amount removed.
      *
@@ -104,6 +111,10 @@ public class BlackjackComputerPlayer extends BlackjackPlayer {
             default:
                 bid = 5;
         }
+        while (bid > player.getTokens() && bid >= 3) {
+            bid -= 2;
+        }
+
         player.setTokens(player.getTokens() - bid);
 
         return bid;

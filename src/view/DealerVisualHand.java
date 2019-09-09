@@ -5,6 +5,8 @@ import javafxextend.standard.CardImageView;
 
 class DealerVisualHand extends BlackjackVisualHand {
 
+    private boolean showAllCards = false;
+
     DealerVisualHand(Pane handPane) {
         super(handPane);
         this.setScoreVisibility(false);
@@ -12,15 +14,21 @@ class DealerVisualHand extends BlackjackVisualHand {
 
     protected void addCardImageView(CardImageView cardImageView) {
         if (this.getSavedCardImageViews().size() > 0) {
-            cardImageView.setIsFaceUp(false);
+            cardImageView.setIsFaceUp(showAllCards);
         }
         super.addCardImageView(cardImageView);
     }
 
-    void showAllCards() {
+    void showEverything() {
         for (CardImageView cardImageView : this.getSavedCardImageViews()) {
             cardImageView.setIsFaceUp(true);
         }
         this.setScoreVisibility(true);
+        this.showAllCards = true;
+    }
+
+    void hideStatus() {
+        this.showAllCards = false;
+        this.setScoreVisibility(false);
     }
 }

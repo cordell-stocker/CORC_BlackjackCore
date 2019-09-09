@@ -1,5 +1,6 @@
 package solution;
 
+import model.AbstractBlackjackController;
 import model.BlackjackDeck;
 import model.BlackjackPlayer;
 import structure.Deck;
@@ -11,7 +12,7 @@ public class Runner {
 
         BlackjackPlayer human = new BlackjackHumanPlayer();
         BlackjackPlayer dealer = new BlackjackComputerPlayer();
-        BlackjackController gameController = new BlackjackController(human, dealer, deck);
+        AbstractBlackjackController gameController = new BlackjackController(human, dealer, deck);
         gameController.launchWithGUI();
     }
 }
