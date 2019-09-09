@@ -4,24 +4,19 @@ import standard.Card;
 
 public abstract class AbstractBlackjackHand {
 
-    private BlackjackCardset cardset;
-
-    public void setCardset(BlackjackCardset cardset) {
-        this.cardset = cardset;
-    }
-
-    public void addCard(Card card) {
-        this.cardset.addCard(card);
-    }
+    /**
+     * For student to implement.
+     *
+     * @param card the card to be added.
+     */
+    public abstract void addCard(Card card);
 
     /**
      * For student to implement.
      *
      * Needs to set all indexes in this.hand to null.
      */
-    public void clearCards() {
-        this.cardset.clear();
-    }
+    public abstract void clearCards();
 
     /**
      * For student to implement.

@@ -14,7 +14,7 @@ public class BlackjackHumanPlayer extends BlackjackPlayer {
     public BlackjackHumanPlayer() {
         super("You");
         this.hand = new BlackjackHand();
-        this.bindHand(this.hand);
+        this.bindBlackjackHand(this.hand);
     }
 
     /**

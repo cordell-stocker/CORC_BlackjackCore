@@ -16,7 +16,7 @@ public class BlackjackComputerPlayer extends BlackjackPlayer {
     public BlackjackComputerPlayer() {
         super("Dealer");
         this.hand = new BlackjackHand();
-        this.bindHand(this.hand);
+        this.bindBlackjackHand(this.hand);
     }
 
     /**

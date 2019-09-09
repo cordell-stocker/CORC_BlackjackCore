@@ -27,7 +27,6 @@ public class BlackjackHand extends AbstractBlackjackHand {
      */
     @Override
     public void addCard(Card card) {
-        super.addCard(card); // Given. Do Not Touch!
         int index = 0;
         boolean searching = true;
         while (searching) {
@@ -47,7 +46,6 @@ public class BlackjackHand extends AbstractBlackjackHand {
     @SuppressWarnings("ExplicitArrayFilling")
     @Override
     public void clearCards() {
-        super.clearCards(); // Given. Do Not Touch!
         for (int i = 0; i < this.hand.length; i++) {
             this.hand[i] = null;
         }

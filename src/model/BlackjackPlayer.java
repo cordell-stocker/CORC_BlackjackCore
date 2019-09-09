@@ -18,8 +18,8 @@ public abstract class BlackjackPlayer {
         this.NAME = name;
     }
 
-    protected void bindHand(AbstractBlackjackHand hand) {
-        hand.setCardset(this.CARDSET);
+    protected void bindBlackjackHand(AbstractBlackjackHand hand) {
+        this.CARDSET.bind(hand.getCards());
     }
 
     /**
