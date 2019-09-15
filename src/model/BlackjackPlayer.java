@@ -23,6 +23,10 @@ public abstract class BlackjackPlayer<C extends AbstractBlackjackController> {
         this.CARDSET.bind(hand.getCards());
     }
 
+    protected void bindCardset(BlackjackCardset otherCardset) {
+        this.CARDSET.bind(otherCardset);
+    }
+
     /**
      * For student to implement.
      * <p>

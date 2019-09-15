@@ -93,7 +93,6 @@ public class BlackjackController extends AbstractBlackjackController {
      *
      * @return the winner of the hand.
      */
-    @Override
     public BlackjackPlayer playHand() {
         if (deck.size() <= NEW_DECK_THRESHOLD) {
             deck.reset();

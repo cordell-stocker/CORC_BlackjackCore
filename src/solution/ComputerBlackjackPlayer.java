@@ -8,12 +8,12 @@ import standard.Card;
 import java.util.Random;
 
 @SuppressWarnings("WeakerAccess")
-public class BlackjackComputerPlayer extends BlackjackPlayer {
+public class ComputerBlackjackPlayer extends BlackjackPlayer {
 
     private final BlackjackHand hand;
-    private BlackjackComputerPlayer player = this;
+    private ComputerBlackjackPlayer player = this;
 
-    public BlackjackComputerPlayer() {
+    public ComputerBlackjackPlayer() {
         super("Dealer");
         this.hand = new BlackjackHand();
         this.bindBlackjackHand(this.hand);

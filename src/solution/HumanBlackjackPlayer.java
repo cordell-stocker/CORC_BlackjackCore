@@ -11,12 +11,12 @@ import standard.Card;
  * controller to get user input.
  */
 @SuppressWarnings("WeakerAccess")
-public class BlackjackHumanPlayer extends BlackjackPlayer<BlackjackController> {
+public class HumanBlackjackPlayer extends BlackjackPlayer<BlackjackController> {
 
     private final BlackjackHand hand;
-    private BlackjackHumanPlayer player = this;
+    private HumanBlackjackPlayer player = this;
 
-    public BlackjackHumanPlayer() {
+    public HumanBlackjackPlayer() {
         super("You");
         this.hand = new BlackjackHand();
         this.bindBlackjackHand(this.hand);

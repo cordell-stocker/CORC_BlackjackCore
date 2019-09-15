@@ -15,8 +15,6 @@ public abstract class AbstractBlackjackController {
 
     public abstract void playGame();
 
-    public abstract BlackjackPlayer playHand();
-
     /**
      * @return either "HIT" or "STAY"
      */
