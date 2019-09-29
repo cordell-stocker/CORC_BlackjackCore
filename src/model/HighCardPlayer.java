@@ -1,16 +1,17 @@
 package model;
 
 import highcard.HighCardController;
-import javafxextend.standard.Deck;
 import standard.Card;
+import standard.Cardset;
+import standard.Deck;
 
 public class HighCardPlayer extends BlackjackPlayer<HighCardController> {
 
-    private final BlackjackCardset CARDSET = new BlackjackCardset();
+    private final Cardset CARDSET;
 
-    public HighCardPlayer(String name) {
-        super(name);
-        this.bindCardset(this.CARDSET);
+    public HighCardPlayer(String name, Cardset cardset) {
+        super(name, cardset);
+        this.CARDSET = cardset;
     }
 
     @Override

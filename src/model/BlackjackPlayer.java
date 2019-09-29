@@ -3,28 +3,34 @@ package model;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
-import javafxextend.standard.Deck;
 import standard.Card;
+import standard.Cardset;
+import standard.Deck;
+import structure.ICardsetListener;
+import structure.IChangeListener;
 import view.BlackjackVisualHand;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("unused")
 public abstract class BlackjackPlayer<C extends AbstractBlackjackController> {
 
-    private final SimpleIntegerProperty SCORE = new SimpleIntegerProperty(0);
-    private final SimpleIntegerProperty TOKENS = new SimpleIntegerProperty(0);
-    private final BlackjackCardset CARDSET = new BlackjackCardset();
+    private final List<IChangeListener<Integer>> SCORE_LISTENERS = new ArrayList<>();
+    private final List<IChangeListener<Integer>> TOKEN_LISTENERS = new ArrayList<>();
+
+    private int SCORE = 0;
+    private int TOKENS = 0;
+    private final Cardset CARDSET;
     private final String NAME;
 
-    public BlackjackPlayer(String name) {
+    public BlackjackPlayer(String name, Cardset cardset) {
         this.NAME = name;
+        this.CARDSET = cardset;
     }
 
     protected void bindBlackjackHand(AbstractBlackjackHand hand) {
         this.CARDSET.bind(hand.getCards());
-    }
-
-    protected void bindCardset(BlackjackCardset otherCardset) {
-        this.CARDSET.bind(otherCardset);
     }
 
     /**
@@ -80,28 +86,30 @@ public abstract class BlackjackPlayer<C extends AbstractBlackjackController> {
      * @return this player's score.
      */
     public int getScore() {
-        return this.SCORE.get();
+        return this.SCORE;
     }
 
     /**
      * @param value the new score for this player.
      */
     public void setScore(int value) {
-        this.SCORE.set(value);
+        this.fireScoreListeners(this.SCORE, value);
+        this.SCORE = value;
     }
 
     /**
      * @return this player's tokens.
      */
     public int getTokens() {
-        return this.TOKENS.get();
+        return this.TOKENS;
     }
 
     /**
      * @param value the new tokens for this player.
      */
     public void setTokens(int value) {
-        this.TOKENS.set(value);
+        this.fireTokenListeners(this.TOKENS, value);
+        this.TOKENS = value;
     }
 
     /**
@@ -111,33 +119,42 @@ public abstract class BlackjackPlayer<C extends AbstractBlackjackController> {
         return this.NAME;
     }
 
-    public void addScoreListener(ChangeListener<? super Number> listener) {
-        this.SCORE.addListener(listener);
-        this.SCORE.set(this.SCORE.get());
+    private void fireScoreListeners(int oldScore, int newScore) {
+        for (IChangeListener<Integer> listener : this.SCORE_LISTENERS) {
+            listener.valueChanged(oldScore, newScore);
+        }
     }
 
-    public void removeScoreListener(ChangeListener<? super Number> listener) {
-        this.SCORE.removeListener(listener);
+    private void fireTokenListeners(int oldTokens, int newTokens) {
+        for (IChangeListener<Integer> listener : this.TOKEN_LISTENERS) {
+            listener.valueChanged(oldTokens, newTokens);
+        }
     }
 
-    public void addTokenListener(ChangeListener<? super Number> listener) {
-        this.TOKENS.addListener(listener);
-        this.TOKENS.set(this.TOKENS.get());
+    public void addScoreListener(IChangeListener<Integer> listener) {
+        this.SCORE_LISTENERS.add(listener);
+        this.setScore(this.SCORE);
     }
 
-    public void removeTokenListener(ChangeListener<? super Number> listener) {
-        this.TOKENS.removeListener(listener);
+    public void removeScoreListener(IChangeListener<Integer> listener) {
+        this.SCORE_LISTENERS.remove(listener);
     }
 
-    public void addCardsetListener(ListChangeListener<Card> listener) {
-        this.CARDSET.addListener(listener);
+    public void addTokenListener(IChangeListener<Integer> listener) {
+        this.TOKEN_LISTENERS.add(listener);
+        this.setTokens(this.TOKENS);
     }
 
-    public void removeCardsetListener(ListChangeListener<Card> listener) {
-        this.CARDSET.removeListener(listener);
+    public void removeTokenListener(IChangeListener<Integer> listener) {
+        this.TOKEN_LISTENERS.remove(listener);
     }
 
-    public void setVisualHand(BlackjackVisualHand visualHand) {
-        this.CARDSET.setVisualHand(visualHand);
+    public void addCardsetListener(ICardsetListener<Card> listener) {
+        this.CARDSET.addCardsetListener(listener);
     }
+
+    public void removeCardsetListener(ICardsetListener<Card> listener) {
+        this.CARDSET.removeCardsetListener(listener);
+    }
+
 }

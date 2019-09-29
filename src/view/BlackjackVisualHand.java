@@ -1,24 +1,22 @@
 package view;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafxextend.standard.CardImageView;
 import javafxextend.standard.VisualHand;
-import standard.Card;
+import structure.IChangeListener;
 
 public class BlackjackVisualHand extends VisualHand {
 
     private final GridPane GRID = new GridPane();
     private final Label SCORE = new Label("0");
     private final Label TOKENS = new Label("0");
-    private ChangeListener<Number> scoreListener =
-            ((observableValue, oldVal, newVal) -> Platform.runLater(() -> this.SCORE.setText("" + newVal)));
-    private ChangeListener<Number> tokenListener =
-            ((observableValue, oldVal, newVal) -> Platform.runLater(() -> this.TOKENS.setText("" + newVal)));
+    private IChangeListener<Integer> scoreListener =
+            ((oldVal, newVal) -> Platform.runLater(() -> this.SCORE.setText("" + newVal)));
+    private IChangeListener<Integer> tokenListener =
+            ((oldVal, newVal) -> Platform.runLater(() -> this.TOKENS.setText("" + newVal)));
 
     BlackjackVisualHand(Pane handPane) {
         super(handPane);
@@ -38,36 +36,16 @@ public class BlackjackVisualHand extends VisualHand {
         this.GRID.setMaxHeight(height);
     }
 
-    ChangeListener<Number> getScoreListener() {
+    IChangeListener<Integer> getScoreListener() {
         return this.scoreListener;
     }
 
-    ChangeListener<Number> getTokenListener() {
+    IChangeListener<Integer> getTokenListener() {
         return this.tokenListener;
     }
 
     void setScoreVisibility(boolean visibility) {
         this.SCORE.setVisible(visibility);
-    }
-
-    public void addCard(Card card) {
-        Platform.runLater(() -> {
-            CardImageView cardImageView = new CardImageView(card);
-            this.addCardImageView(cardImageView);
-        });
-    }
-
-    public void removeCard(Card card) {
-        Platform.runLater(() -> {
-            CardImageView toRemove = null;
-            for (CardImageView cardImageView : this.getSavedCardImageViews()) {
-                if (cardImageView.getCard() == card) {
-                    toRemove = cardImageView;
-                    break;
-                }
-            }
-            this.removeCardImageView(toRemove);
-        });
     }
 
 }

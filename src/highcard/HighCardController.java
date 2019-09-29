@@ -1,9 +1,9 @@
 package highcard;
 
-import javafxextend.standard.Deck;
 import model.AbstractBlackjackController;
 import model.BlackjackPlayer;
 import standard.Card;
+import standard.Deck;
 import standard.Face;
 
 public class HighCardController extends AbstractBlackjackController {

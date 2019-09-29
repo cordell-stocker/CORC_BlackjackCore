@@ -20,6 +20,8 @@ import javafxextend.standard.CardImageView;
 import model.AbstractBlackjackController;
 import model.BlackjackPlayer;
 import standard.Card;
+import structure.ICardsetListener;
+import structure.IChangeListener;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class BlackjackGUIController extends GUIController {
@@ -108,11 +110,11 @@ public class BlackjackGUIController extends GUIController {
 
     private void setupPlayer(BlackjackPlayer player, BlackjackVisualHand visualHand) {
         visualHand.setMinHeight(deckImage.getHeight());
-        ListChangeListener<Card> cardListener = visualHand.getListener();
-        ChangeListener<Number> scoreListener = visualHand.getScoreListener();
-        ChangeListener<Number> tokenListener = visualHand.getTokenListener();
+        ICardsetListener<Card> cardListener = visualHand.getListener();
+        IChangeListener<Integer> scoreListener = visualHand.getScoreListener();
+        IChangeListener<Integer> tokenListener = visualHand.getTokenListener();
+
         player.addCardsetListener(cardListener);
-        player.setVisualHand(visualHand);
         player.addScoreListener(scoreListener);
         player.addTokenListener(tokenListener);
     }

@@ -1,8 +1,11 @@
 package solution;
 
-import javafxextend.standard.Deck;
 import model.BlackjackPlayer;
 import standard.Card;
+import standard.Cardset;
+import standard.Deck;
+
+import java.util.ArrayList;
 
 /**
  * Represents the human player in a game of Blackjack.
@@ -17,7 +20,7 @@ public class HumanBlackjackPlayer extends BlackjackPlayer<BlackjackController> {
     private HumanBlackjackPlayer player = this;
 
     public HumanBlackjackPlayer() {
-        super("You");
+        super("You", new Cardset(new ArrayList<>()));
         this.hand = new BlackjackHand();
         this.bindBlackjackHand(this.hand);
     }

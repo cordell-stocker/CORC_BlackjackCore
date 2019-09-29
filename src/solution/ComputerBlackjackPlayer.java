@@ -1,10 +1,12 @@
 package solution;
 
-import javafxextend.standard.Deck;
 import model.AbstractBlackjackController;
 import model.BlackjackPlayer;
 import standard.Card;
+import standard.Cardset;
+import standard.Deck;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 @SuppressWarnings("WeakerAccess")
@@ -14,7 +16,7 @@ public class ComputerBlackjackPlayer extends BlackjackPlayer {
     private ComputerBlackjackPlayer player = this;
 
     public ComputerBlackjackPlayer() {
-        super("Dealer");
+        super("Dealer", new Cardset(new ArrayList<>()));
         this.hand = new BlackjackHand();
         this.bindBlackjackHand(this.hand);
     }
