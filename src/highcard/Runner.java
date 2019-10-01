@@ -1,11 +1,9 @@
 package highcard;
 
-import model.AbstractBlackjackController;
-import model.BlackjackDeck;
-import model.BlackjackPlayer;
-import model.HighCardPlayer;
+import model.*;
 import standard.Cardset;
 import structure.IDeck;
+import view.HighCardKElvensGUIController;
 
 import java.util.ArrayList;
 
@@ -15,9 +13,10 @@ public class Runner {
         BlackjackDeck deck = new BlackjackDeck();
         IDeck.setDeck(deck);
 
-        BlackjackPlayer human = new HighCardPlayer("You", new Cardset(new ArrayList<>()));
-        BlackjackPlayer dealer = new HighCardPlayer("Dealer", new Cardset(new ArrayList<>()));
-        AbstractBlackjackController gameController = new HighCardController(human, dealer, deck);
-        gameController.launchWithGUI();
+        HighCardKElevensPlayer human = new HighCardKElevensPlayer("You", new Cardset(new ArrayList<>()));
+        HighCardKElevensPlayer dealer = new HighCardKElevensPlayer("Dealer", new Cardset(new ArrayList<>()));
+        AbstractHighCardController gameController = new HighCardController(human, dealer, deck);
+        HighCardKElvensGUIController.setGameController(gameController);
+        HighCardKElvensGUIController.launchGUI();
     }
 }

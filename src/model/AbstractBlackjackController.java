@@ -2,16 +2,9 @@ package model;
 
 import view.BlackjackGUIController;
 
-public abstract class AbstractBlackjackController {
+public abstract class AbstractBlackjackController extends AbstractGameController {
 
     private BlackjackGUIController gui;
-
-    public void launchWithGUI() {
-        BlackjackGUIController.setGameController(this);
-        BlackjackGUIController.launchGUI();
-    }
-
-    public abstract void play();
 
     public abstract void playGame();
 
@@ -62,13 +55,6 @@ public abstract class AbstractBlackjackController {
      */
     public void getContinue() {
         this.gui.getContinue();
-    }
-
-    /**
-     * Closes the game.
-     */
-    public void exitGame() {
-        System.exit(1);
     }
 
     public abstract BlackjackPlayer getHumanPlayer();

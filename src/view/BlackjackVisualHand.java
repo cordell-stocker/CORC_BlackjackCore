@@ -14,14 +14,17 @@ public class BlackjackVisualHand extends VisualHand {
     private final Label SCORE = new Label("0");
     private final Label TOKENS = new Label("0");
     private IChangeListener<Integer> scoreListener =
-            ((oldVal, newVal) -> Platform.runLater(() -> this.SCORE.setText("" + newVal)));
+            (oldVal, newVal) -> Platform.runLater(() -> this.SCORE.setText("" + newVal));
     private IChangeListener<Integer> tokenListener =
-            ((oldVal, newVal) -> Platform.runLater(() -> this.TOKENS.setText("" + newVal)));
+            (oldVal, newVal) -> Platform.runLater(() -> this.TOKENS.setText("" + newVal));
 
     BlackjackVisualHand(Pane handPane) {
         super(handPane);
         this.setRight(this.GRID);
+        this.setupGrid();
+    }
 
+    private void setupGrid() {
         Label score = new Label("Score: ");
         Label tokens = new Label("Tokens: ");
 
@@ -32,7 +35,7 @@ public class BlackjackVisualHand extends VisualHand {
         this.GRID.add(this.SCORE, 1, 0);
         this.GRID.add(this.TOKENS, 1, 1);
         this.GRID.setAlignment(Pos.CENTER);
-        this.GRID.setStyle("-fx-background-color: WHITE; -fx-padding: 3px");
+        this.GRID.setStyle(SharedValues.GRID_PANE_CSS);
         this.GRID.setMaxHeight(height);
     }
 

@@ -2,7 +2,11 @@ package view;
 
 import javafxextend.structure.OptionPanel;
 
-class PlayPanel extends OptionPanel<String> {
+public class PlayPanel extends OptionPanel<String> {
+
+    public enum Result {
+        PLAY_GAME, EXIT
+    }
 
     private final static String[] OPTIONS = new String[]{"Play Game", "Exit"};
 
@@ -13,7 +17,12 @@ class PlayPanel extends OptionPanel<String> {
     /**
      * @return either "PLAY GAME" or "EXIT"
      */
-    String getSelectedOption() {
-        return super.getOptionClicked().toUpperCase();
+    Result getSelectedOption() {
+        String answer = super.getOptionClicked().toUpperCase();
+        if (answer.equals("PLAY GAME")) {
+            return Result.PLAY_GAME;
+        } else {
+            return Result.EXIT;
+        }
     }
 }

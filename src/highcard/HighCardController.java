@@ -1,33 +1,28 @@
 package highcard;
 
-import model.AbstractBlackjackController;
-import model.BlackjackPlayer;
+import model.AbstractHighCardController;
+import model.HighCardKElevensPlayer;
 import standard.Card;
 import standard.Deck;
 import standard.Face;
 
-public class HighCardController extends AbstractBlackjackController {
+public class HighCardController extends AbstractHighCardController {
 
     private final Deck DECK;
-    private final BlackjackPlayer HUMAN;
-    private final BlackjackPlayer DEALER;
+    private final HighCardKElevensPlayer HUMAN;
+    private final HighCardKElevensPlayer DEALER;
 
-    public HighCardController(BlackjackPlayer human, BlackjackPlayer dealer, Deck deck) {
+    public HighCardController(HighCardKElevensPlayer human, HighCardKElevensPlayer dealer, Deck deck) {
         this.HUMAN = human;
         this.DEALER = dealer;
         this.DECK = deck;
     }
 
     @Override
-    public void play() {
-        this.playGame();
-    }
-
-    @Override
     public void playGame() {
         HighCardController controller = this;
-        BlackjackPlayer human = this.HUMAN;
-        BlackjackPlayer dealer = this.DEALER;
+        HighCardKElevensPlayer human = this.HUMAN;
+        HighCardKElevensPlayer dealer = this.DEALER;
         Deck deck = this.DECK;
 
         boolean playing = true;
@@ -46,7 +41,7 @@ public class HighCardController extends AbstractBlackjackController {
             int dealerScore = controller.getCardValue(dealerCard);
             dealer.setScore(dealerScore);
 
-            BlackjackPlayer winner;
+            HighCardKElevensPlayer winner;
             if (humanScore > dealerScore) {
                 winner = human;
             } else {
@@ -66,7 +61,7 @@ public class HighCardController extends AbstractBlackjackController {
     public int getCardValue(Card card) {
         Face face = card.getFace();
         String faceName = face.getName();
-        int value = 0;
+        int value;
         if (faceName.equals("ACE")) {
             value = 11;
         }
@@ -80,11 +75,11 @@ public class HighCardController extends AbstractBlackjackController {
     }
 
     public boolean getPlayAgain() {
-        return super.getPlayOptionClicked().equals("PLAY GAME");
+        return super.getPlayAgain();
     }
 
-    public void setWinner(BlackjackPlayer player) {
-        super.setHandWinner(player);
+    public void setWinner(HighCardKElevensPlayer player) {
+        super.setWinner(player);
     }
 
     @Override
@@ -93,12 +88,12 @@ public class HighCardController extends AbstractBlackjackController {
     }
 
     @Override
-    public BlackjackPlayer getHumanPlayer() {
+    public HighCardKElevensPlayer getHumanPlayer() {
         return this.HUMAN;
     }
 
     @Override
-    public BlackjackPlayer getDealerPlayer() {
+    public HighCardKElevensPlayer getDealerPlayer() {
         return this.DEALER;
     }
 }

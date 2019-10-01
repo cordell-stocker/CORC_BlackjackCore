@@ -4,6 +4,7 @@ import model.AbstractBlackjackController;
 import model.BlackjackDeck;
 import model.BlackjackPlayer;
 import structure.IDeck;
+import view.BlackjackGUIController;
 
 public class Runner {
     public static void main(String[] args) {
@@ -13,7 +14,8 @@ public class Runner {
         BlackjackPlayer human = new HumanBlackjackPlayer();
         BlackjackPlayer dealer = new ComputerBlackjackPlayer();
         AbstractBlackjackController gameController = new BlackjackController(human, dealer, deck);
-        gameController.launchWithGUI();
+        BlackjackGUIController.setGameController(gameController);
+        BlackjackGUIController.launchGUI();
     }
 }
 
