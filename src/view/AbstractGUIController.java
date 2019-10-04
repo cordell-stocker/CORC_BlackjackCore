@@ -18,6 +18,12 @@ import model.AbstractPlayer;
 
 public abstract class AbstractGUIController extends GUIController {
 
+    private static String title = "";
+
+    public static void setTitle(String title) {
+        AbstractGUIController.title = title;
+    }
+
     final StackPane CENTER_PANE = new StackPane();
     private final PlayPanel PLAY_PANEL = new PlayPanel();
     private final WinnerDisplay WINNER_DISPLAY = new WinnerDisplay();
@@ -41,6 +47,7 @@ public abstract class AbstractGUIController extends GUIController {
                 SharedValues.SCREEN_HEIGHT,
                 SharedValues.color
         );
+        stage.setTitle(AbstractGUIController.title);
         stage.setScene(scene);
         stage.show();
     }

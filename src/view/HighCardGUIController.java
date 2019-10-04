@@ -6,21 +6,21 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafxextend.standard.VisualHand;
 import model.AbstractHighCardController;
-import model.HighCardKElevensPlayer;
+import model.HighCardPlayer;
 import standard.Card;
 import structure.ICardsetListener;
 import structure.IChangeListener;
 
-public class HighCardKElevensGUIController extends AbstractGUIController {
+public class HighCardGUIController extends AbstractGUIController {
 
     private static AbstractHighCardController controller;
 
     public static void setGameController(AbstractHighCardController controller) {
-        HighCardKElevensGUIController.controller = controller;
+        HighCardGUIController.controller = controller;
     }
 
     public static void launchGUI() {
-        BlackjackGUIController.launch();
+        BlackjackKElevensGUIController.launch();
     }
 
     private final BorderPane MAIN_PANE = new BorderPane();
@@ -28,9 +28,9 @@ public class HighCardKElevensGUIController extends AbstractGUIController {
 
     @Override
     public void start(Stage stage) {
-        HighCardKElevensGUIController.controller.setGuiController(this);
+        HighCardGUIController.controller.setGuiController(this);
 
-        this.addStartButton(() -> new Thread(() -> HighCardKElevensGUIController.controller.play()));
+        this.addStartButton(() -> new Thread(() -> HighCardGUIController.controller.play()));
 
         this.constructGUIAndStart(stage, MAIN_PANE);
     }
@@ -39,7 +39,7 @@ public class HighCardKElevensGUIController extends AbstractGUIController {
     VisualHand setupDealer() {
         HBox dealerCardPane = createPlayerHBox();
         VisualHandWithScore dealerVH = new VisualHandWithScore(dealerCardPane);
-        HighCardKElevensPlayer dealerPlayer = HighCardKElevensGUIController.controller.getDealerPlayer();
+        HighCardPlayer dealerPlayer = HighCardGUIController.controller.getDealerPlayer();
         this.setupPlayer(dealerPlayer, dealerVH);
         return dealerVH;
     }
@@ -48,7 +48,7 @@ public class HighCardKElevensGUIController extends AbstractGUIController {
     VisualHand setupHuman() {
         HBox humanCardPane = createPlayerHBox();
         VisualHandWithScore humanVH = new VisualHandWithScore(humanCardPane);
-        HighCardKElevensPlayer humanPlayer = HighCardKElevensGUIController.controller.getHumanPlayer();
+        HighCardPlayer humanPlayer = HighCardGUIController.controller.getHumanPlayer();
         this.setupPlayer(humanPlayer, humanVH);
         return humanVH;
     }
@@ -60,7 +60,7 @@ public class HighCardKElevensGUIController extends AbstractGUIController {
         return hbox;
     }
 
-    private void setupPlayer(HighCardKElevensPlayer player, VisualHandWithScore visualHand) {
+    private void setupPlayer(HighCardPlayer player, VisualHandWithScore visualHand) {
         visualHand.setMinHeight(deckImage.getHeight());
         ICardsetListener<Card> cardListener = visualHand.getListener();
         IChangeListener<Integer> scoreListener = visualHand.getScoreListener();
@@ -69,7 +69,7 @@ public class HighCardKElevensGUIController extends AbstractGUIController {
         player.addScoreListener(scoreListener);
     }
 
-    public void showHandWinner(HighCardKElevensPlayer player) {
+    public void showHandWinner(HighCardPlayer player) {
         super.showHandWinner(player, () -> {
             // do nothing
         });

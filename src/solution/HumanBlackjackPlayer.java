@@ -104,7 +104,7 @@ public class HumanBlackjackPlayer extends BlackjackPlayer<BlackjackController> {
     /**
      * For student to implement.
      * <p>
-     * MUST call {@link BlackjackController#getBidClicked(int)}.
+     * MUST call {@link BlackjackController#getBidClicked()}.
      * <p>
      * MUST remove tokens, and return the amount removed.
      *
@@ -112,7 +112,7 @@ public class HumanBlackjackPlayer extends BlackjackPlayer<BlackjackController> {
      */
     @Override
     public int bid(BlackjackController controller) {
-        int bid = controller.getBidClicked(this.getTokens());
+        int bid = controller.getBidClicked();
         player.setTokens(player.getTokens() - bid);
         return bid;
     }

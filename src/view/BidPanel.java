@@ -11,11 +11,7 @@ class BidPanel extends OptionPanel<Integer> {
         super("Click amount to bid", BidPanel.POSSIBLE_BIDS);
     }
 
-    Integer getBidClicked(int availableTokens) {
-        int bid = super.getOptionClicked();
-        while (bid > availableTokens) {
-            bid = super.getOptionClicked();
-        }
-        return bid;
+    Integer getBidClicked() {
+        return super.getOptionClicked();
     }
 }

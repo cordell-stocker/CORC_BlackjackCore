@@ -3,9 +3,10 @@ package solution;
 import model.AbstractBlackjackController;
 import model.BlackjackDeck;
 import model.BlackjackPlayer;
+import model.PlayerWithScoreAndTokens;
 
 @SuppressWarnings({"WeakerAccess", "FieldCanBeLocal", "unchecked"})
-public class BlackjackController extends AbstractBlackjackController {
+public class BlackjackController extends AbstractBlackjackController<BlackjackPlayer> {
 
     private BlackjackPlayer human;
     private BlackjackPlayer dealer;
@@ -166,8 +167,8 @@ public class BlackjackController extends AbstractBlackjackController {
     }
 
     @Override
-    public int getBidClicked(int availableTokens) {
-        return super.getBidClicked(availableTokens);
+    public int getBidClicked() {
+        return super.getBidClicked();
     }
 
     @Override

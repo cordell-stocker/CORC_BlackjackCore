@@ -1,7 +1,7 @@
 package highcard;
 
 import model.AbstractHighCardController;
-import model.HighCardKElevensPlayer;
+import model.HighCardPlayer;
 import standard.Card;
 import standard.Deck;
 import standard.Face;
@@ -9,10 +9,10 @@ import standard.Face;
 public class HighCardController extends AbstractHighCardController {
 
 	private final Deck DECK;
-	private final HighCardKElevensPlayer HUMAN;
-	private final HighCardKElevensPlayer DEALER;
+	private final HighCardPlayer HUMAN;
+	private final HighCardPlayer DEALER;
 
-	public HighCardController(HighCardKElevensPlayer human, HighCardKElevensPlayer dealer, Deck deck) {
+	public HighCardController(HighCardPlayer human, HighCardPlayer dealer, Deck deck) {
 		this.HUMAN = human;
 		this.DEALER = dealer;
 		this.DECK = deck;
@@ -22,8 +22,8 @@ public class HighCardController extends AbstractHighCardController {
 	public void playGame() {
 		// Given. Do not touch ===========================
 		HighCardController controller = this;           //
-		HighCardKElevensPlayer human = this.HUMAN;      //
-		HighCardKElevensPlayer dealer = this.DEALER;    //
+		HighCardPlayer human = this.HUMAN;      //
+		HighCardPlayer dealer = this.DEALER;    //
 		Deck deck = this.DECK;                          //
 		// ===============================================
 		boolean playing = true;
@@ -42,7 +42,7 @@ public class HighCardController extends AbstractHighCardController {
 			int dealerScore = controller.getCardValue(dealerCard);
 			dealer.setScore(dealerScore);
 
-			HighCardKElevensPlayer winner;
+			HighCardPlayer winner;
 			if (humanScore > dealerScore) {
 				winner = human;
 			} else {
@@ -75,11 +75,13 @@ public class HighCardController extends AbstractHighCardController {
 		return value;
 	}
 
+	@Override
 	public boolean getPlayGame() {
 		return super.getPlayGame();
 	}
 
-	public void setWinner(HighCardKElevensPlayer player) {
+	@Override
+	public void setWinner(HighCardPlayer player) {
 		super.setWinner(player);
 	}
 
@@ -89,12 +91,12 @@ public class HighCardController extends AbstractHighCardController {
 	}
 
 	@Override
-	public HighCardKElevensPlayer getHumanPlayer() {
+	public HighCardPlayer getHumanPlayer() {
 		return this.HUMAN;
 	}
 
 	@Override
-	public HighCardKElevensPlayer getDealerPlayer() {
+	public HighCardPlayer getDealerPlayer() {
 		return this.DEALER;
 	}
 }

@@ -1,10 +1,10 @@
 package model;
 
-import view.BlackjackGUIController;
+import view.BlackjackKElevensGUIController;
 
-public abstract class AbstractBlackjackController extends AbstractGameController {
+public abstract class AbstractBlackjackController<P extends PlayerWithScoreAndTokens> extends AbstractGameController {
 
-    private BlackjackGUIController gui;
+    private BlackjackKElevensGUIController gui;
 
     public abstract void playGame();
 
@@ -20,7 +20,7 @@ public abstract class AbstractBlackjackController extends AbstractGameController
      *
      * @param player the player who won the hand.
      */
-    public void setHandWinner(BlackjackPlayer player) {
+    public void setHandWinner(P player) {
         this.gui.showHandWinner(player);
     }
 
@@ -29,7 +29,7 @@ public abstract class AbstractBlackjackController extends AbstractGameController
      *
      * @param player the player who won the game.
      */
-    public void setGameWinner(BlackjackPlayer player) {
+    public void setGameWinner(P player) {
         this.gui.showGameWinner(player);
     }
 
@@ -43,11 +43,10 @@ public abstract class AbstractBlackjackController extends AbstractGameController
     /**
      * Will not allow player to bid more tokens than they have.
      *
-     * @param availableTokens how many tokens the player has.
      * @return the amount clicked.
      */
-    public int getBidClicked(int availableTokens) {
-        return this.gui.getBidClicked(availableTokens);
+    public int getBidClicked() {
+        return this.gui.getBidClicked();
     }
 
     /**
@@ -57,11 +56,11 @@ public abstract class AbstractBlackjackController extends AbstractGameController
         this.gui.getContinue();
     }
 
-    public abstract BlackjackPlayer getHumanPlayer();
+    public abstract P getHumanPlayer();
 
-    public abstract BlackjackPlayer getDealerPlayer();
+    public abstract P getDealerPlayer();
 
-    public void setGuiController(BlackjackGUIController gui) {
+    public void setGuiController(BlackjackKElevensGUIController gui) {
         this.gui = gui;
     }
 

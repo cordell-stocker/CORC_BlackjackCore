@@ -1,10 +1,10 @@
 package model;
 
-import view.HighCardKElevensGUIController;
+import view.HighCardGUIController;
 
 public abstract class AbstractHighCardController extends AbstractGameController{
 
-    private HighCardKElevensGUIController gui;
+    private HighCardGUIController gui;
 
     public void play() {
         this.playGame();
@@ -16,15 +16,15 @@ public abstract class AbstractHighCardController extends AbstractGameController{
         return gui.getPlayGame();
     }
 
-    public void setWinner(HighCardKElevensPlayer player) {
+    public void setWinner(HighCardPlayer player) {
         gui.showHandWinner(player);
     }
 
-    public abstract HighCardKElevensPlayer getHumanPlayer();
+    public abstract HighCardPlayer getHumanPlayer();
 
-    public abstract HighCardKElevensPlayer getDealerPlayer();
+    public abstract HighCardPlayer getDealerPlayer();
 
-    public void setGuiController(HighCardKElevensGUIController gui) {
+    public void setGuiController(HighCardGUIController gui) {
         this.gui = gui;
     }
 }

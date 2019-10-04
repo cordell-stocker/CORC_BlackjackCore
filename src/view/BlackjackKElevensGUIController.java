@@ -7,21 +7,21 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafxextend.standard.VisualHand;
 import model.AbstractBlackjackController;
-import model.BlackjackPlayer;
+import model.PlayerWithScoreAndTokens;
 import standard.Card;
 import structure.ICardsetListener;
 import structure.IChangeListener;
 
-public class BlackjackGUIController extends AbstractGUIController {
+public class BlackjackKElevensGUIController extends AbstractGUIController {
 
     private static AbstractBlackjackController controller;
 
     public static void setGameController(AbstractBlackjackController controller) {
-        BlackjackGUIController.controller = controller;
+        BlackjackKElevensGUIController.controller = controller;
     }
 
     public static void launchGUI() {
-        BlackjackGUIController.launch();
+        BlackjackKElevensGUIController.launch();
     }
 
     private final BorderPane MAIN_PANE = new BorderPane();
@@ -32,9 +32,9 @@ public class BlackjackGUIController extends AbstractGUIController {
 
     @Override
     public void start(Stage primaryStage) {
-        BlackjackGUIController.controller.setGuiController(this);
+        BlackjackKElevensGUIController.controller.setGuiController(this);
 
-        this.addStartButton(() -> new Thread(() -> BlackjackGUIController.controller.play()));
+        this.addStartButton(() -> new Thread(() -> BlackjackKElevensGUIController.controller.play()));
 
         constructGUIAndStart(primaryStage, MAIN_PANE);
     }
@@ -43,7 +43,7 @@ public class BlackjackGUIController extends AbstractGUIController {
     VisualHand setupDealer() {
         HBox dealerCardPane = createPlayerHBox();
         this.dealerVH = new DealerVisualHand(dealerCardPane);
-        BlackjackPlayer dealerPlayer = BlackjackGUIController.controller.getDealerPlayer();
+        PlayerWithScoreAndTokens dealerPlayer = BlackjackKElevensGUIController.controller.getDealerPlayer();
         this.setupPlayer(dealerPlayer, this.dealerVH);
         return this.dealerVH;
     }
@@ -52,7 +52,7 @@ public class BlackjackGUIController extends AbstractGUIController {
     VisualHand setupHuman() {
         HBox humanCardPane = createPlayerHBox();
         BlackjackVisualHand humanVH = new BlackjackVisualHand(humanCardPane);
-        BlackjackPlayer humanPlayer = BlackjackGUIController.controller.getHumanPlayer();
+        PlayerWithScoreAndTokens humanPlayer = BlackjackKElevensGUIController.controller.getHumanPlayer();
         this.setupPlayer(humanPlayer, humanVH);
         return humanVH;
     }
@@ -64,7 +64,7 @@ public class BlackjackGUIController extends AbstractGUIController {
         return hbox;
     }
 
-    private void setupPlayer(BlackjackPlayer player, BlackjackVisualHand visualHand) {
+    private void setupPlayer(PlayerWithScoreAndTokens player, BlackjackVisualHand visualHand) {
         visualHand.setMinHeight(deckImage.getHeight());
         ICardsetListener<Card> cardListener = visualHand.getListener();
         IChangeListener<Integer> scoreListener = visualHand.getScoreListener();
@@ -84,9 +84,9 @@ public class BlackjackGUIController extends AbstractGUIController {
         return action;
     }
 
-    public int getBidClicked(int availableTokens) {
+    public int getBidClicked() {
         this.addNodeToCenter(this.BID_PANEL);
-        int bid = this.BID_PANEL.getBidClicked(availableTokens);
+        int bid = this.BID_PANEL.getBidClicked();
         this.removeNodeFromCenter(this.BID_PANEL);
 
         return bid;
@@ -96,11 +96,11 @@ public class BlackjackGUIController extends AbstractGUIController {
         super.getContinue(() -> dealerVH.hideStatus());
     }
 
-    public void showHandWinner(BlackjackPlayer player) {
+    public void showHandWinner(PlayerWithScoreAndTokens player) {
         super.showHandWinner(player, () -> dealerVH.showEverything());
     }
 
-    public void showGameWinner(BlackjackPlayer player) {
+    public void showGameWinner(PlayerWithScoreAndTokens player) {
         super.showGameWinner(player, () -> dealerVH.showEverything());
     }
 
