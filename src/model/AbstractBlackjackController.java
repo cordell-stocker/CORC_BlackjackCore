@@ -34,10 +34,10 @@ public abstract class AbstractBlackjackController extends AbstractGameController
     }
 
     /**
-     * @return either "PLAY GAME" or "EXIT"
+     * @return
      */
-    public String getPlayOptionClicked() {
-        return this.gui.getPlayOptionClicked();
+    public boolean getPlayGame() {
+        return this.gui.getPlayGame();
     }
 
     /**

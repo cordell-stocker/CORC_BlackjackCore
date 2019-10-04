@@ -1,8 +1,18 @@
 package view;
 
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import javafxextend.standard.CardImageView;
+import javafxextend.standard.VisualHand;
 import javafxextend.structure.GUIController;
 import model.AbstractPlayer;
 
@@ -12,15 +22,66 @@ public abstract class AbstractGUIController extends GUIController {
     private final PlayPanel PLAY_PANEL = new PlayPanel();
     private final WinnerDisplay WINNER_DISPLAY = new WinnerDisplay();
     private final ContinuePanel CONTINUE_PANEL = new ContinuePanel();
-
+    final CardImageView DECK_CIV = new CardImageView();
     private volatile boolean displayingWinner;
 
-    public String getPlayOptionClicked() {
+    abstract VisualHand setupDealer();
+    abstract VisualHand setupHuman();
+
+    void constructGUIAndStart(Stage stage, BorderPane pane) {
+        VisualHand dealerVH = this.setupDealer();
+        VisualHand humanVH = this.setupHuman();
+        this.updateDeckLocation(pane);
+        this.updateWinnerDisplayLocation(pane);
+        this.updateMainPaneAndCenterPane(pane, dealerVH, humanVH);
+
+        Scene scene = new Scene(
+                pane,
+                SharedValues.SCREEN_WIDTH,
+                SharedValues.SCREEN_HEIGHT,
+                SharedValues.color
+        );
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private void updateWinnerDisplayLocation(Pane pane) {
+        ReadOnlyDoubleProperty screenHeight = pane.heightProperty();
+        this.WINNER_DISPLAY.translateYProperty().bind(screenHeight.divide(-5));
+    }
+
+    private void updateDeckLocation(Pane pane) {
+        ReadOnlyDoubleProperty screenWidth = pane.widthProperty();
+        this.DECK_CIV.translateXProperty().bind(screenWidth.divide(-6));
+    }
+
+    private void updateMainPaneAndCenterPane(BorderPane pane, VisualHand dealerVH, VisualHand humanVH) {
+        this.CENTER_PANE.setAlignment(Pos.CENTER);
+        this.CENTER_PANE.getChildren().add(this.DECK_CIV);
+
+        pane.setBackground(Background.EMPTY);
+        pane.setCenter(this.CENTER_PANE);
+        pane.setTop(dealerVH);
+        pane.setBottom(humanVH);
+    }
+
+    void addStartButton(ModelStarter starter) {
+        Button start = new Button("Start Game");
+        this.addNodeToCenter(start);
+        start.setOnAction(e -> {
+            Thread gameThread = starter.makeGameThread();
+            gameThread.setDaemon(true);
+            gameThread.start();
+            this.removeNodeFromCenter(start);
+        });
+    }
+
+    public Boolean getPlayGame() {
         this.addNodeToCenter(this.PLAY_PANEL);
         PlayPanel.Result option = this.PLAY_PANEL.getSelectedOption();
         this.removeNodeFromCenter(this.PLAY_PANEL);
 
-        return option.toString();
+        return option.equals(PlayPanel.Result.PLAY_GAME);
     }
 
     void getContinue(CodeWrapper code) {

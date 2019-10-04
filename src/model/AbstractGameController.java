@@ -8,7 +8,7 @@ public abstract class AbstractGameController {
      * Closes the game.
      */
     public void exitGame() {
-        System.exit(1);
+        System.exit(0);
     }
 
 }

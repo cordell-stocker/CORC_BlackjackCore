@@ -39,8 +39,8 @@ public class BlackjackController extends AbstractBlackjackController {
         boolean playing = true;
         while (playing) {
             gameController.playGame();
-            String response = gameController.getPlayOptionClicked();
-            playing = response.equals("PLAY GAME");
+            boolean response = gameController.getPlayGame();
+            playing = response;
         }
         gameController.exitGame();
     }
@@ -171,8 +171,8 @@ public class BlackjackController extends AbstractBlackjackController {
     }
 
     @Override
-    public String getPlayOptionClicked() {
-        return super.getPlayOptionClicked();
+    public boolean getPlayGame() {
+        return super.getPlayGame();
     }
 
     @Override

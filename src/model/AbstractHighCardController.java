@@ -1,10 +1,10 @@
 package model;
 
-import view.HighCardKElvensGUIController;
+import view.HighCardKElevensGUIController;
 
 public abstract class AbstractHighCardController extends AbstractGameController{
 
-    private HighCardKElvensGUIController gui;
+    private HighCardKElevensGUIController gui;
 
     public void play() {
         this.playGame();
@@ -12,8 +12,8 @@ public abstract class AbstractHighCardController extends AbstractGameController{
 
     public abstract void playGame();
 
-    public boolean getPlayAgain() {
-        return gui.getPlayOptionClicked().equals("PLAY_GAME");
+    public boolean getPlayGame() {
+        return gui.getPlayGame();
     }
 
     public void setWinner(HighCardKElevensPlayer player) {
@@ -24,7 +24,7 @@ public abstract class AbstractHighCardController extends AbstractGameController{
 
     public abstract HighCardKElevensPlayer getDealerPlayer();
 
-    public void setGuiController(HighCardKElvensGUIController gui) {
+    public void setGuiController(HighCardKElevensGUIController gui) {
         this.gui = gui;
     }
 }

@@ -3,7 +3,7 @@ package highcard;
 import model.*;
 import standard.Cardset;
 import structure.IDeck;
-import view.HighCardKElvensGUIController;
+import view.HighCardKElevensGUIController;
 
 import java.util.ArrayList;
 
@@ -16,7 +16,7 @@ public class Runner {
         HighCardKElevensPlayer human = new HighCardKElevensPlayer("You", new Cardset(new ArrayList<>()));
         HighCardKElevensPlayer dealer = new HighCardKElevensPlayer("Dealer", new Cardset(new ArrayList<>()));
         AbstractHighCardController gameController = new HighCardController(human, dealer, deck);
-        HighCardKElvensGUIController.setGameController(gameController);
-        HighCardKElvensGUIController.launchGUI();
+        HighCardKElevensGUIController.setGameController(gameController);
+        HighCardKElevensGUIController.launchGUI();
     }
 }

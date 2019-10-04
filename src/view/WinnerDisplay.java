@@ -8,7 +8,7 @@ import model.BlackjackPlayer;
 @SuppressWarnings({"FieldCanBeLocal"})
 class WinnerDisplay extends Label {
 
-    private final double FONT_SIZE = 60;
+    private final double FONT_SIZE = 50;
     private final String FONT = "Tohma";
 
     WinnerDisplay() {
