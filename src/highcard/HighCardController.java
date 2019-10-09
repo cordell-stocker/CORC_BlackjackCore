@@ -1,10 +1,10 @@
 package highcard;
 
-import model.AbstractHighCardController;
-import model.HighCardPlayer;
-import standard.Card;
-import standard.Deck;
-import standard.Face;
+import corc.standard.Card;
+import corc.standard.Deck;
+import corc.standard.Face;
+import blackjackcore.model.AbstractHighCardController;
+import blackjackcore.model.player.HighCardPlayer;
 
 public class HighCardController extends AbstractHighCardController {
 

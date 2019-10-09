@@ -1,10 +1,11 @@
 package highcard;
 
-import model.*;
-import standard.Cardset;
-import structure.IDeck;
-import view.AbstractGUIController;
-import view.HighCardGUIController;
+import corc.standard.Cardset;
+import corc.structure.IDeck;
+import blackjackcore.model.*;
+import blackjackcore.model.player.HighCardPlayer;
+import blackjackcore.view.AbstractGUIController;
+import blackjackcore.view.HighCardGUIController;
 
 import java.util.ArrayList;
 

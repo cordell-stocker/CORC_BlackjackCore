@@ -1,10 +1,8 @@
 package kelevensbak;
 
-import model.AbstractKElevensController;
-import model.KElevensPlayer;
-import standard.Card;
-import standard.Deck;
-import standard.Face;
+import corc.standard.*;
+import blackjackcore.model.AbstractKElevensController;
+import blackjackcore.model.player.KElevensPlayer;
 
 public class KElevensBakController extends AbstractKElevensController<KElevensPlayer> {
 

@@ -1,10 +1,11 @@
 package kelevens;
 
-import model.*;
-import standard.Cardset;
-import structure.IDeck;
-import view.AbstractGUIController;
-import view.BlackjackKElevensGUIController;
+import corc.standard.Cardset;
+import corc.structure.IDeck;
+import blackjackcore.model.*;
+import blackjackcore.model.player.KElevensPlayer;
+import blackjackcore.view.AbstractGUIController;
+import blackjackcore.view.BlackjackKElevensGUIController;
 
 import java.util.ArrayList;
 
