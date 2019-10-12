@@ -8,15 +8,23 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
-public class BlackjackVisualHand extends VisualHand {
+class BlackjackVisualHand extends VisualHand {
 
     private final GridPane GRID = new GridPane();
     private final Label SCORE = new Label("0");
     private final Label TOKENS = new Label("0");
-    private IChangeListener<Integer> scoreListener =
-            (oldVal, newVal) -> Platform.runLater(() -> this.SCORE.setText("" + newVal));
-    private IChangeListener<Integer> tokenListener =
-            (oldVal, newVal) -> Platform.runLater(() -> this.TOKENS.setText("" + newVal));
+    private IChangeListener<Integer> scoreListener = new IChangeListener<>() {
+        @Override
+        public synchronized void valueChanged(Integer oldVal, Integer newVal) {
+            Platform.runLater(() -> SCORE.setText("" + newVal));
+        }
+    };
+    private IChangeListener<Integer> tokenListener =new IChangeListener<>() {
+        @Override
+        public synchronized void valueChanged(Integer oldVal, Integer newVal) {
+            Platform.runLater(() -> TOKENS.setText("" + newVal));
+        }
+    };
 
     BlackjackVisualHand(Pane handPane) {
         super(handPane);
