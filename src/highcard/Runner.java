@@ -1,5 +1,6 @@
 package highcard;
 
+import corc.core.Control;
 import corc.standard.Cardset;
 import corc.structure.IDeck;
 import blackjackcore.model.*;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 public class Runner {
 
     public static void main(String[] args) {
+        Control.setAlwaysCreateDebug(true);
         AbstractGUIController.setTitle("High Card");
         BlackjackDeck deck = new BlackjackDeck();
         IDeck.setDeck(deck);

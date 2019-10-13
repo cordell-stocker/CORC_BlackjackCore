@@ -62,7 +62,7 @@ public class HighCardGUIController extends AbstractGUIController {
 
     private void setupPlayer(HighCardPlayer player, VisualHandWithScore visualHand) {
         visualHand.setMinHeight(deckImage.getHeight());
-        ICardsetListener<Card> cardListener = visualHand.getListener();
+        ICardsetListener<Card> cardListener = visualHand.getCardsetListener();
         IChangeListener<Integer> scoreListener = visualHand.getScoreListener();
 
         player.addCardsetListener(cardListener);

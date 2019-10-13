@@ -78,6 +78,7 @@ public abstract class AbstractGUIController extends GUIController {
         this.addNodeToCenter(start);
         start.setOnAction(e -> {
             Thread gameThread = starter.makeGameThread();
+            gameThread.setName(title + " Model Thread");
             gameThread.setDaemon(true);
             gameThread.start();
             this.removeNodeFromCenter(start);

@@ -1,5 +1,7 @@
 package blackjackcore.model;
 
+import corc.core.Control;
+
 public abstract class AbstractGameController {
 
     public abstract void play();
@@ -8,6 +10,7 @@ public abstract class AbstractGameController {
      * Closes the game.
      */
     public void exitGame() {
+        Control.exitProgram();
         System.exit(0);
     }
 

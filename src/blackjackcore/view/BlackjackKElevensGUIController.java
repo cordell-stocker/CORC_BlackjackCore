@@ -66,7 +66,7 @@ public class BlackjackKElevensGUIController extends AbstractGUIController {
 
     private void setupPlayer(PlayerWithScoreAndTokens player, BlackjackVisualHand visualHand) {
         visualHand.setMinHeight(deckImage.getHeight());
-        ICardsetListener<Card> cardListener = visualHand.getListener();
+        ICardsetListener<Card> cardListener = visualHand.getCardsetListener();
         IChangeListener<Integer> scoreListener = visualHand.getScoreListener();
         IChangeListener<Integer> tokenListener = visualHand.getTokenListener();
 
