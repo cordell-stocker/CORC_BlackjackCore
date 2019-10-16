@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A player that keeps track of a Score as well as
- * everything that an {@link AbstractPlayer} does.
+ * A player with a Score as well as everything
+ * that an {@link AbstractPlayer} does.
  */
 public abstract class PlayerWithScore extends AbstractPlayer {
 
@@ -16,7 +16,8 @@ public abstract class PlayerWithScore extends AbstractPlayer {
 	private int SCORE = 0;
 
 	/**
-	 * Creates a player with a Score as well as everything from {@link AbstractPlayer}.
+	 * Creates a player with a Score as well
+	 * as everything from {@link AbstractPlayer}.
 	 *
 	 * @param name    the name of this player.
 	 * @param cardset the {@link Cardset} this player uses.

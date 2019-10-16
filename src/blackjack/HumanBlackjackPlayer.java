@@ -1,24 +1,21 @@
 package blackjack;
 
-import corc.standard.*;
 import blackjackcore.model.player.BlackjackPlayer;
-
-import java.util.ArrayList;
+import corc.standard.*;
 
 /**
  * Represents the human player in a game of Blackjack.
  * <p>
- * A BlackjackHumanPlayer will need to makes calls to its
+ * A BlackjackHumanPlayer will need to makes calls to the
  * controller to get user input.
  */
-@SuppressWarnings("WeakerAccess")
 public class HumanBlackjackPlayer extends BlackjackPlayer<BlackjackController> {
 
     private final BlackjackHand hand;
     private HumanBlackjackPlayer player = this;
 
-    public HumanBlackjackPlayer() {
-        super("You", new Cardset(new ArrayList<>()));
+    public HumanBlackjackPlayer(String name, Cardset cardset) {
+        super(name, cardset);
         this.hand = new BlackjackHand();
         this.bindBlackjackHand(this.hand);
     }
@@ -70,8 +67,9 @@ public class HumanBlackjackPlayer extends BlackjackPlayer<BlackjackController> {
      */
     @Override
     public void addCard(Card card) {
-        this.hand.addCard(card);
-        this.setScore(this.hand.getHandScore());
+        hand.addCard(card);
+        int score = hand.getHandScore();
+        player.setScore(score);
     }
 
     /**
@@ -83,8 +81,8 @@ public class HumanBlackjackPlayer extends BlackjackPlayer<BlackjackController> {
      */
     @Override
     public void clearCards() {
-        this.hand.clearCards();
-        this.setScore(0);
+        hand.clearCards();
+        player.setScore(0);
     }
 
     /**
@@ -96,7 +94,8 @@ public class HumanBlackjackPlayer extends BlackjackPlayer<BlackjackController> {
      */
     @Override
     public int getCardCount() {
-        return this.hand.getCardCount();
+        int count = hand.getCardCount();
+        return count;
     }
 
     /**
@@ -105,13 +104,26 @@ public class HumanBlackjackPlayer extends BlackjackPlayer<BlackjackController> {
      * MUST call {@link BlackjackController#getBidClicked()}.
      * <p>
      * MUST remove tokens, and return the amount removed.
+     * <p>
+     * MUST NOT allow the player to bid more tokens
+     * than they have.
      *
      * @return the amount this player is bidding.
      */
     @Override
     public int bid(BlackjackController controller) {
-        int bid = controller.getBidClicked();
-        player.setTokens(player.getTokens() - bid);
+        int bid = 0;
+        boolean validBid = false;
+
+        while (!validBid) {
+            bid = controller.getBidClicked();
+            if (bid <= player.getTokens()) {
+                validBid = true;
+            }
+        }
+
+        int newTokens = player.getTokens() - bid;
+        player.setTokens(newTokens);
         return bid;
     }
 

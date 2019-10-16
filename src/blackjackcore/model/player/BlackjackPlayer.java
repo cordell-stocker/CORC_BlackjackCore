@@ -6,13 +6,16 @@ import corc.standard.Deck;
 import blackjackcore.model.AbstractBlackjackController;
 import blackjackcore.model.AbstractBlackjackHand;
 
-@SuppressWarnings("unused")
+/**
+ * A player for playing a game of Blackjack.
+ */
 public abstract class BlackjackPlayer<C extends AbstractBlackjackController> extends PlayerWithScoreAndTokens {
 
-    private int SCORE = 0;
-    private int TOKENS = 0;
     private final Cardset CARDSET;
 
+    /**
+     * Creates a player for playing a game of Blackjack.
+     */
     public BlackjackPlayer(String name, Cardset cardset) {
         super(name, cardset);
         this.CARDSET = cardset;
@@ -25,10 +28,10 @@ public abstract class BlackjackPlayer<C extends AbstractBlackjackController> ext
     /**
      * For student to implement.
      * <p>
-     * SHOULD prevent the player from playing (end turn) once
-     * their score goes over 21.
+     * SHOULD prevent the player from playing once
+     * their score goes over 21 (end turn).
      * <p>
-     * MUST contain all logic needed for hitting or staying
+     * MUST contain all logic needed for hitting or staying.
      *
      * @param controller the game controller.
      * @param deck       the deck used in the game.
@@ -39,6 +42,7 @@ public abstract class BlackjackPlayer<C extends AbstractBlackjackController> ext
      * For the student to implement.
      * <p>
      * MUST wrap the {@link AbstractBlackjackHand#addCard(Card)} method.
+     * <p>
      * SHOULD update this player's score.
      *
      * @param card the Card to be added to this player's hand.
@@ -49,6 +53,7 @@ public abstract class BlackjackPlayer<C extends AbstractBlackjackController> ext
      * For student to implement.
      * <p>
      * MUST wrap the {@link AbstractBlackjackHand#clearCards()} method.
+     * <p>
      * SHOULD set this player's score back to 0.
      */
     public abstract void clearCards();

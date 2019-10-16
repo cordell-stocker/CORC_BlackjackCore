@@ -1,16 +1,12 @@
 package blackjack;
 
-import corc.standard.Card;
-import corc.standard.Cardset;
-import corc.standard.Deck;
-import blackjackcore.model.AbstractBlackjackController;
 import blackjackcore.model.player.BlackjackPlayer;
+import corc.standard.*;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-@SuppressWarnings("WeakerAccess")
-public class ComputerBlackjackPlayer extends BlackjackPlayer {
+public class ComputerBlackjackPlayer extends BlackjackPlayer<BlackjackController> {
 
     private final BlackjackHand hand;
     private ComputerBlackjackPlayer player = this;
@@ -25,18 +21,19 @@ public class ComputerBlackjackPlayer extends BlackjackPlayer {
      * For student to implement.
      * <p>
      * MUST draw another Card while its score
-     * is below 16.
+     * is below 16. Unless this player has
+     * five cards.
      *
      * @param controller the game controller.
      * @param deck       the deck for the game.
      */
     @Override
-    public void takeTurn(AbstractBlackjackController controller, Deck deck) {
+    public void takeTurn(BlackjackController controller, Deck deck) {
         boolean playing = true;
         while (playing) {
-            if (this.getScore() < 16) {
+            if (player.getScore() < 16 && hand.getCardCount() < 5) {
                 Card card = deck.drawCard();
-                this.addCard(card);
+                player.addCard(card);
             } else {
                 playing = false;
             }
@@ -54,9 +51,9 @@ public class ComputerBlackjackPlayer extends BlackjackPlayer {
      */
     @Override
     public void addCard(Card card) {
-        this.hand.addCard(card);
-        int handScore = this.hand.getHandScore();
-        this.setScore(handScore);
+        hand.addCard(card);
+        int handScore = hand.getHandScore();
+        player.setScore(handScore);
     }
 
     /**
@@ -68,8 +65,8 @@ public class ComputerBlackjackPlayer extends BlackjackPlayer {
      */
     @Override
     public void clearCards() {
-        this.hand.clearCards();
-        this.setScore(0);
+        hand.clearCards();
+        player.setScore(0);
     }
 
     /**
@@ -81,7 +78,7 @@ public class ComputerBlackjackPlayer extends BlackjackPlayer {
      */
     @Override
     public int getCardCount() {
-        return this.hand.getCardCount();
+        return hand.getCardCount();
     }
 
     /**
@@ -97,7 +94,7 @@ public class ComputerBlackjackPlayer extends BlackjackPlayer {
      * @return the amount this player is bidding.
      */
     @Override
-    public int bid(AbstractBlackjackController controller) {
+    public int bid(BlackjackController controller) {
         Random random = new Random();
         final int BOUND = 3;
         int choice = random.nextInt(BOUND);

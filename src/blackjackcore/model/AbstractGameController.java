@@ -11,7 +11,6 @@ public abstract class AbstractGameController {
      */
     public void exitGame() {
         Control.exitProgram();
-        System.exit(0);
     }
 
 }

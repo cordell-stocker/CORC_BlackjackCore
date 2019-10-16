@@ -3,22 +3,20 @@ package blackjack;
 import blackjackcore.model.AbstractBlackjackController;
 import blackjackcore.model.BlackjackDeck;
 import blackjackcore.model.player.BlackjackPlayer;
+import corc.standard.*;
 
-@SuppressWarnings({"WeakerAccess", "FieldCanBeLocal", "unchecked"})
 public class BlackjackController extends AbstractBlackjackController<BlackjackPlayer> {
 
     private BlackjackPlayer human;
     private BlackjackPlayer dealer;
     private BlackjackController gameController = this;
     private BlackjackDeck deck;
-    private final int NEW_DECK_THRESHOLD = 15;
-    private final int STARTING_CARDS = 2;
-    private final int MAX_SCORE = 21;
-    private final int CARD_COUNT_WIN_THRESHOLD = 5;
-    private final int STARTING_TOKENS = 20;
-    private final int WINNING_THRESHOLD = 40; // For now the goal is to double what the player started with.
 
-    public BlackjackController(BlackjackPlayer human, BlackjackPlayer dealer, BlackjackDeck deck) {
+    public BlackjackController(
+            BlackjackPlayer human,
+            BlackjackPlayer dealer,
+            BlackjackDeck deck
+    ) {
         this.human = human;
         this.dealer = dealer;
         this.deck = deck;
@@ -54,6 +52,9 @@ public class BlackjackController extends AbstractBlackjackController<BlackjackPl
      */
     @Override
     public void playGame() {
+        int STARTING_TOKENS = 20;
+        // For now the goal is to double what the player started with.
+        int WINNING_THRESHOLD = 40;
         human.setTokens(STARTING_TOKENS);
         dealer.setTokens(STARTING_TOKENS);
         deck.reset();
@@ -64,7 +65,7 @@ public class BlackjackController extends AbstractBlackjackController<BlackjackPl
             BlackjackPlayer winner = gameController.playHand();
             gameController.setHandWinner(winner);
 
-            gameController.getContinue();
+            gameController.getContinue(); // completely stops execution until "continue" is pressed in the GUI.
 
             human.clearCards();
             dealer.clearCards();
@@ -94,6 +95,7 @@ public class BlackjackController extends AbstractBlackjackController<BlackjackPl
      * @return the winner of the hand.
      */
     public BlackjackPlayer playHand() {
+        int NEW_DECK_THRESHOLD = 15;
         if (deck.size() <= NEW_DECK_THRESHOLD) {
             deck.reset();
             deck.shuffle();
@@ -103,11 +105,14 @@ public class BlackjackController extends AbstractBlackjackController<BlackjackPl
         bidPool += human.bid(gameController);
         bidPool += dealer.bid(gameController);
 
+        int STARTING_CARDS = 2;
         for (int i = 0; i < STARTING_CARDS; i++) {
             human.addCard(deck.drawCard());
             dealer.addCard(deck.drawCard());
         }
 
+        int MAX_SCORE = 21;
+        int CARD_COUNT_WIN_THRESHOLD = 5;
         BlackjackPlayer handWinner;
         human.takeTurn(gameController, deck);
         // Dealer won.

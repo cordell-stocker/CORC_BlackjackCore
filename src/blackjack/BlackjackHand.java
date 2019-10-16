@@ -13,7 +13,6 @@ import blackjackcore.model.AbstractBlackjackHand;
  * 4) get the number of Cards in the hand.
  * 5) any functionality that aids in the above items.
  */
-@SuppressWarnings("WeakerAccess")
 public class BlackjackHand extends AbstractBlackjackHand {
 
     private Card[] hand;
@@ -31,6 +30,10 @@ public class BlackjackHand extends AbstractBlackjackHand {
      */
     @Override
     public void addCard(Card card) {
+        /* This can also be done using a
+         * class level variable to track
+         * the next open slot.
+         */
         int index = 0;
         boolean searching = true;
         while (searching) {
@@ -47,7 +50,6 @@ public class BlackjackHand extends AbstractBlackjackHand {
      * <p>
      * MUST set all indexes in the hand to null.
      */
-    @SuppressWarnings("ExplicitArrayFilling")
     @Override
     public void clearCards() {
         for (int i = 0; i < this.hand.length; i++) {
@@ -65,7 +67,6 @@ public class BlackjackHand extends AbstractBlackjackHand {
     @Override
     public int getCardCount() {
         int count = 0;
-        //noinspection ForLoopReplaceableByForEach
         for (int i = 0; i < this.hand.length; i++) {
             if (this.hand[i] != null) {
                 count++;
