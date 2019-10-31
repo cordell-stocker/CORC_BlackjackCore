@@ -112,7 +112,7 @@ public abstract class AbstractGUIController extends GUIController {
         return option.equals(PlayPanel.Result.PLAY_GAME);
     }
 
-    void getContinue(CodeWrapper code) {
+    public void getContinue(CodeWrapper code) {
         this.addNodeToCenter(this.CONTINUE_PANEL);
         this.CONTINUE_PANEL.getContinue();
         this.removeNodeFromCenter(this.CONTINUE_PANEL);
