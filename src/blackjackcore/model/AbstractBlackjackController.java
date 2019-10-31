@@ -20,11 +20,11 @@ This file is part of CORC BlackjackCore.
 package blackjackcore.model;
 
 import blackjackcore.model.player.PlayerWithScoreAndTokens;
-import blackjackcore.view.BlackjackKElevensGUIController;
+import blackjackcore.view.GUIController;
 
 public abstract class AbstractBlackjackController<P extends PlayerWithScoreAndTokens> extends AbstractGameController {
 
-    private BlackjackKElevensGUIController gui;
+    private GUIController gui;
 
     public abstract void playGame();
 
@@ -80,7 +80,7 @@ public abstract class AbstractBlackjackController<P extends PlayerWithScoreAndTo
 
     public abstract P getDealerPlayer();
 
-    public void setGuiController(BlackjackKElevensGUIController gui) {
+    public void setGuiController(GUIController gui) {
         this.gui = gui;
     }
 

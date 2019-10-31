@@ -31,16 +31,16 @@ import javafx.stage.Stage;
 import blackjackcore.model.AbstractBlackjackController;
 import blackjackcore.model.player.PlayerWithScoreAndTokens;
 
-public class BlackjackKElevensGUIController extends AbstractGUIController {
+public class GUIController extends AbstractGUIController {
 
     private static AbstractBlackjackController controller;
 
     public static void setGameController(AbstractBlackjackController controller) {
-        BlackjackKElevensGUIController.controller = controller;
+        GUIController.controller = controller;
     }
 
     public static void launchGUI() {
-        BlackjackKElevensGUIController.launch();
+        GUIController.launch();
     }
 
     private final BorderPane MAIN_PANE = new BorderPane();
@@ -51,9 +51,9 @@ public class BlackjackKElevensGUIController extends AbstractGUIController {
 
     @Override
     public void start(Stage primaryStage) {
-        BlackjackKElevensGUIController.controller.setGuiController(this);
+        GUIController.controller.setGuiController(this);
 
-        this.addStartButton(() -> new Thread(() -> BlackjackKElevensGUIController.controller.play()));
+        this.addStartButton(() -> new Thread(() -> GUIController.controller.play()));
 
         constructGUIAndStart(primaryStage, MAIN_PANE);
     }
@@ -62,7 +62,7 @@ public class BlackjackKElevensGUIController extends AbstractGUIController {
     VisualHand setupDealer() {
         HBox dealerCardPane = createPlayerHBox();
         this.dealerVH = new DealerVisualHand(dealerCardPane);
-        PlayerWithScoreAndTokens dealerPlayer = BlackjackKElevensGUIController.controller.getDealerPlayer();
+        PlayerWithScoreAndTokens dealerPlayer = GUIController.controller.getDealerPlayer();
         this.setupPlayer(dealerPlayer, this.dealerVH);
         return this.dealerVH;
     }
@@ -71,7 +71,7 @@ public class BlackjackKElevensGUIController extends AbstractGUIController {
     VisualHand setupHuman() {
         HBox humanCardPane = createPlayerHBox();
         BlackjackVisualHand humanVH = new BlackjackVisualHand(humanCardPane);
-        PlayerWithScoreAndTokens humanPlayer = BlackjackKElevensGUIController.controller.getHumanPlayer();
+        PlayerWithScoreAndTokens humanPlayer = GUIController.controller.getHumanPlayer();
         this.setupPlayer(humanPlayer, humanVH);
         return humanVH;
     }
