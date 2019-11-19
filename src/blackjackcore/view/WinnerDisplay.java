@@ -36,7 +36,12 @@ class WinnerDisplay extends Label {
     }
 
     void setHandWinner(AbstractPlayer player) {
-        String text = player.getName() + " Won!";
+        String text = "";
+        if (player == null) {
+            text = "Tie! A Push.";
+        } else {
+            text = player.getName() + " Won!";
+        }
         this.setText(text);
     }
 

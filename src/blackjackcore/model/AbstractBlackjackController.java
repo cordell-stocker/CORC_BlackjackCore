@@ -54,7 +54,7 @@ public abstract class AbstractBlackjackController<P extends PlayerWithScoreAndTo
     }
 
     /**
-     * @return
+     * @return true if the player has selected "Play Game".
      */
     public boolean getPlayGame() {
         return this.gui.getPlayGame();
