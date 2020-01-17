@@ -104,7 +104,8 @@ public abstract class AbstractGUIController extends GUIController {
         });
     }
 
-    public Boolean getPlayGame() {
+    public Boolean getPlayGame(CodeWrapper code) {
+        Platform.runLater(code::run);
         this.addNodeToCenter(this.PLAY_PANEL);
         PlayPanel.Result option = this.PLAY_PANEL.getSelectedOption();
         this.removeNodeFromCenter(this.PLAY_PANEL);

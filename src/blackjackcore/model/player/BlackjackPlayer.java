@@ -23,25 +23,17 @@ import corc.standard.Card;
 import corc.standard.Cardset;
 import corc.standard.Deck;
 import blackjackcore.model.AbstractBlackjackController;
-import blackjackcore.model.AbstractBlackjackHand;
 
 /**
  * A player for playing a game of Blackjack.
  */
 public abstract class BlackjackPlayer<C extends AbstractBlackjackController> extends PlayerWithScoreAndTokens {
 
-    private final Cardset CARDSET;
-
     /**
      * Creates a player for playing a game of Blackjack.
      */
     public BlackjackPlayer(String name, Cardset cardset) {
         super(name, cardset);
-        this.CARDSET = cardset;
-    }
-
-    protected void bindBlackjackHand(AbstractBlackjackHand hand) {
-        this.CARDSET.bind(hand.getCards());
     }
 
     /**
@@ -60,8 +52,6 @@ public abstract class BlackjackPlayer<C extends AbstractBlackjackController> ext
     /**
      * For the student to implement.
      * <p>
-     * MUST wrap the {@link AbstractBlackjackHand#addCard(Card)} method.
-     * <p>
      * SHOULD update this player's score.
      *
      * @param card the Card to be added to this player's hand.
@@ -71,28 +61,16 @@ public abstract class BlackjackPlayer<C extends AbstractBlackjackController> ext
     /**
      * For student to implement.
      * <p>
-     * MUST wrap the {@link AbstractBlackjackHand#clearCards()} method.
-     * <p>
      * SHOULD set this player's score back to 0.
      */
     public abstract void clearCards();
 
     /**
      * For student to implement.
-     * <p>
-     * MUST wrap the {@link AbstractBlackjackHand#getCardCount()} method.
      *
      * @return number of Cards in the hand.
      */
     public abstract int getCardCount();
 
-    /**
-     * For student to implement.
-     * <p>
-     * MUST remove tokens, and return the amount removed.
-     *
-     * @return the amount this player is bidding.
-     */
-    public abstract int bid(C controller);
 
 }

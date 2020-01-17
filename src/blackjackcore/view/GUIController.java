@@ -104,11 +104,16 @@ public class GUIController extends AbstractGUIController {
     }
 
     public int getBidClicked() {
+        Platform.runLater(dealerVH::hideStatus);
         this.addNodeToCenter(this.BID_PANEL);
         int bid = this.BID_PANEL.getBidClicked();
         this.removeNodeFromCenter(this.BID_PANEL);
 
         return bid;
+    }
+
+    public boolean getPlayGame() {
+        return super.getPlayGame(() -> dealerVH.hideStatus());
     }
 
     public void getContinue() {
